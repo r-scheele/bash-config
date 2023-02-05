@@ -55,35 +55,6 @@ function compile(){
 --image directpv:thunov172211am --org cniackz4 --registry quay.io
 	./kubectl-directpv --kubeconfig /home/ccelis/.kube/config $1
 }
-function installoperator() {
-        # Make sure to use version or tag so that you don't have to compile against latest master code.
-        kubectl apply -k github.com/minio/operator/resources/\?ref\=v4.5.8
-        k get service console -n minio-operator -o yaml > ~/service.yaml
-        yq e -i '.spec.type="NodePort"' ~/service.yaml
-        yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
-        k apply -f ~/service.yaml
-
-k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
-yq -i -e '.spec.replicas |= 1' ~/operator.yaml
-k apply -f ~/operator.yaml
-
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: console-sa-secret
-  namespace: minio-operator
-  annotations:
-    kubernetes.io/service-account.name: console-sa
-type: kubernetes.io/service-account-token
-EOF
-
-
-SA_TOKEN=$(kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
-echo $SA_TOKEN
-
-
-}
 
 function gcenterprise(){
 	git clone git@github.com:cniackz/enterprise.git
