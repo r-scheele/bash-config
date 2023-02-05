@@ -36,6 +36,21 @@ function createcluster() {
     kind create cluster --config ~/bash-config/kind-config.yaml
 }
 
+function JWTOperator() {
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: console-sa-secret
+  namespace: minio-operator
+  annotations:
+    kubernetes.io/service-account.name: console-sa
+type: kubernetes.io/service-account-token
+EOF
+SA_TOKEN=$(kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
+echo $SA_TOKEN
+}
+
 function installoperator() {
     # Make sure to use version or tag so that you don't have to compile against latest master code.
     k apply -k github.com/minio/operator/resources/\?ref\=v4.5.8

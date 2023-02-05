@@ -23,24 +23,6 @@ export PATH=$PATH:/usr/local/go/bin
 export set GOROOT=/usr/local/go
 export set GOPATH=/home/ccelis/go
 
-function JWTOperato(){
-
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: console-sa-secret
-  namespace: minio-operator
-  annotations:
-    kubernetes.io/service-account.name: console-sa
-type: kubernetes.io/service-account-token
-EOF
-
-
-SA_TOKEN=$(kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
-echo $SA_TOKEN
-
-}
 function gcem(){
 	rm -rf ~/enterprise
 	git clone https://cniackz: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@github.com/miniohq/enterprise.git ~/enterprise
