@@ -56,7 +56,13 @@ function installoperator() {
     echo "# START: Operator Token"
     echo "#"
     echo "########################################"
+    echo ""
+    echo ""
+    echo ""
     echo $SA_TOKEN
+    echo ""
+    echo ""
+    echo ""
     echo "########################################"
     echo "#"
     echo "# END: Operator Token"
