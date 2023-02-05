@@ -1,9 +1,17 @@
 ######################################
 #
+# To use bash
+#
+######################################
+bash
+
+######################################
+#
 # All shared Aliases
 #
 ######################################
-alias set ext=exit
-alias set cls=clear
-alias set gst="git status"
-alias set gadd="git add"
+alias ext=exit
+alias cls=clear
+alias gst="git status"
+alias gadd="git add"
+alias gdiff="git diff"
