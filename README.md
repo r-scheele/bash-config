@@ -1,3 +1,9 @@
+# Rules:
+
+1. All changes are made only via Mac cloned Repo
+2. You never locally change anything but all is done via GitHub Repos to have things in synch.
+3. Other than that, enjoy and improve, reuse as much as human possible!
+
 # bash-config
 A simple repo to store bash configuration
 
