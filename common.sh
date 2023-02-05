@@ -92,6 +92,14 @@ function installtenant() {
     k apply -k ~/operator/examples/kustomization/tenant-lite
 }
 
+function installubuntu() {
+    k apply -f ~/bash-config/config-files/ubuntu.yaml -n $1
+}
+
+
+
+
+
 
 
 
