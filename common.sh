@@ -33,7 +33,7 @@ function gcommit() {
 
 function createcluster() {
     kind delete cluster
-    kind create cluster --config ~/bash-config/kind-config.yaml
+    kind create cluster --config ~/bash-config/config-files/kind-config.yaml
 }
 
 function JWTOperator() {
@@ -61,7 +61,7 @@ function installoperator() {
     k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
     yq -i -e '.spec.replicas |= 1' ~/operator.yaml
     k apply -f ~/operator.yaml
-    k apply -f ~/bash-config/console-secret.yaml
+    k apply -f ~/bash-config/config-files/console-secret.yaml
     SA_TOKEN=$(k -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
     echo ""
     echo ""
