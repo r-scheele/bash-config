@@ -1,4 +1,6 @@
-source common.sh
+#!/bin/bash
+
+source ~/bash-config/common.sh
 
 ######################################
 #
