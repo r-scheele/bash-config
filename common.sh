@@ -91,6 +91,7 @@ function installoperator() {
 
 function installtenant() {
     k apply -k ~/operator/examples/kustomization/tenant-lite
+    k apply -f ~/minio/ubuntu.yaml -n tenant-lite
 }
 
 function installubuntu() {
