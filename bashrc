@@ -1,11 +1,28 @@
-alias k="kubectl"
+#!/bin/bash
+
+######################################
+#
+# To import common things:
+#
+######################################
+
+source ~/bash-config/common.sh
+
+######################################
+#
+# Particular things for Ubuntu
+#
+######################################
+
+# Alias for Ubuntu only:
+alias movemouse="keep-presence --seconds 30"
+alias minioserver="CI=on MINIO_ROOT_USER=minio MINIO_ROOT_PASSWORD=minio123 minio server /home/ccelis/data{1...4} --address :9000 --console-address :9001"
+
+# Other particular things for ubuntu:
 export PATH=$PATH:/usr/local/go/bin
-alias grestore="git restore"
 export set GOROOT=/usr/local/go
 export set GOPATH=/home/ccelis/go
-alias gcconsole="git clone git@github.com:cniackz/console.git"
-alias minioserver="CI=on MINIO_ROOT_USER=minio MINIO_ROOT_PASSWORD=minio123 minio server /home/ccelis/data{1...4} --address :9000 --console-address :9001"
-alias gcminio="cd ~; git clone git@github.com:cniackz/minio-1.git minio-1"
+
 function JWTOperato(){
 
 kubectl apply -f - <<EOF
@@ -28,10 +45,6 @@ function gcem(){
 	rm -rf ~/enterprise
 	git clone https://cniackz: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@github.com/miniohq/enterprise.git ~/enterprise
 	cd ~/enterprise
-}
-function createcluster() {
-        kind delete cluster
-        kind create cluster --config /home/ccelis/kind-config.yaml
 }
 function compile(){
 	cd $GOPATH/src/github.com/minio/directpv
@@ -154,14 +167,11 @@ function updateenterprise() {
 	git rebase upstream/master
 	echo "push ok"
 }
-alias gitReset="git reset --hard HEAD; git clean -fd"
+
 export PATH=$PATH:/usr/local/go/bin
-alias wb1="git rev-parse --abbrev-ref HEAD"
-alias movemouse="keep-presence --seconds 30"
-alias gst="git status"
-alias ext="exit"
-alias cls="clear"
-alias k="kubectl"
+
+
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -280,7 +290,6 @@ if ! shopt -oq posix; then
   fi
 fi
 source <(kubectl completion bash)
-alias k=kubectl
 complete -o default -F __start_kubectl k
 
 function JWTOperator() {
