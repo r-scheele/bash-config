@@ -14,6 +14,8 @@ alias gpush="git push"
 alias gdiff="git diff"
 alias gpull="git pull"
 alias wb1="git rev-parse --abbrev-ref HEAD"
+alias sshpg="ssh cesar@65.49.37.17 -p 4492"
+alias sshintel="ssh minio@64.71.151.78 -p 4492"
 alias gcconsole="git clone git@github.com:cniackz/console.git"
 alias gcminio="cd ~; git clone git@github.com:cniackz/minio-1.git minio-1"
 
