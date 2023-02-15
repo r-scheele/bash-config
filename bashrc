@@ -93,13 +93,6 @@ function updatedpv() {
 	git rebase upstream/master
 	echo "push if ok"
 }
-function updateoperator() {
-        git checkout master
-        git remote add upstream git@github.com:minio/operator.git
-        git fetch upstream
-        git rebase upstream/master
-        echo "push if ok"
-}
 function squashmintauto() {
 	git remote add upstream git@github.com:miniohq/mint-auto.git
 	git fetch upstream

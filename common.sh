@@ -100,7 +100,13 @@ function installubuntu() {
     k apply -f ~/bash-config/config-files/ubuntu.yaml -n $1
 }
 
-
+function updateoperator() {
+        git checkout master
+        git remote add upstream git@github.com:minio/operator.git
+        git fetch upstream
+        git rebase upstream/master
+        echo "push if ok"
+}
 
 
 
