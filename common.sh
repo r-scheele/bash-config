@@ -108,7 +108,11 @@ function updateoperator() {
         echo "push if ok"
 }
 
-
+function squashoperator() {
+        git remote add upstream git@github.com:minio/operator.git
+        git fetch upstream
+        git rebase -i upstream/master
+}
 
 
 
