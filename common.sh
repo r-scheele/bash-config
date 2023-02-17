@@ -114,6 +114,10 @@ function squashoperator() {
         git rebase -i upstream/master
 }
 
+function gcoperator() {
+	git clone git@github.com:cniackz/operator.git
+}
+
 
 
 
