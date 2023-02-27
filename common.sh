@@ -124,6 +124,14 @@ function updateconsole() {
         echo "push if ok"
 }
 
+function updateminio() {
+        git checkout master
+        git remote add upstream git@github.com:minio/minio.git
+        git fetch upstream
+        git rebase upstream/master
+        echo "push if ok"
+}
+
 function updateenterprise() {
         git checkout master
         git remote add upstream git@github.com:miniohq/enterprise.git
