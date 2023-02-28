@@ -146,6 +146,12 @@ function squashoperator() {
         git rebase -i upstream/master
 }
 
+function squashconsole() {
+        git remote add upstream git@github.com:minio/console.git
+        git fetch upstream
+        git rebase -i upstream/master
+}
+
 function squashenterprise() {
         git remote add upstream git@github.com:miniohq/enterprise.git
         git fetch upstream
