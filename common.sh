@@ -110,6 +110,14 @@ function installubuntu() {
     k apply -f ~/bash-config/config-files/ubuntu.yaml -n $1
 }
 
+function updaterh() {
+        git checkout main
+        git remote add upstream git@github.com:miniohq/release-hub.git
+        git fetch upstream
+        git rebase upstream/main
+        echo "push if ok"
+}
+
 function updateoperator() {
         git checkout master
         git remote add upstream git@github.com:minio/operator.git
