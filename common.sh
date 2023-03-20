@@ -40,6 +40,10 @@ function commit() {
     git push
 }
 
+function intelcontext() {
+	kubectl config use-context kubernetes-admin@kubernetes
+}
+
 function gcommit() {
     git commit -m "${1}"
 }
@@ -148,6 +152,12 @@ function updateenterprise() {
         git fetch upstream
         git rebase upstream/master
         echo "push if ok"
+}
+
+function squashrh() {
+        git remote add upstream git@github.com:miniohq/release-hub.git
+        git fetch upstream
+        git rebase -i upstream/main
 }
 
 function squashoperator() {
