@@ -182,7 +182,7 @@ function gcoperator() {
 	git clone git@github.com:cniackz/operator.git
 }
 
-function prepareForConsolePR() {
+function createConsolePR() {
 	rm -rf ~/console
 	cd ~/
 	gcconsole
