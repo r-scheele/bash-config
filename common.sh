@@ -182,6 +182,16 @@ function gcoperator() {
 	git clone git@github.com:cniackz/operator.git
 }
 
+function prepareForConsolePR() {
+	rm -rf ~/console
+	cd ~/
+	gcconsole
+	cd ~/console
+	updateconsole
+	git push
+	git checkout -b $1
+	subl .
+}
 
 
 
