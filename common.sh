@@ -193,6 +193,16 @@ function createConsolePR() {
 	subl .
 }
 
+function createRHPR() {
+	rm -rf ~/release-hub
+	cd ~/
+	gcrh
+	cd ~/release-hub
+	updaterh
+	git push
+	git checkout -b $1
+	subl .
+}
 
 
 
