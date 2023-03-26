@@ -204,6 +204,19 @@ function createRHPR() {
 	subl .
 }
 
+function createOperatorPR() {
+	rm -rf ~/operator
+	cd ~/
+	gcoperator
+	cd ~/operator
+	updateoperator
+	git push
+	git checkout -b $1
+	subl .
+}
+
+
+
 
 
 
