@@ -215,6 +215,16 @@ function createOperatorPR() {
 	subl .
 }
 
+function createEnterprisePR() {
+	rm -rf ~/enterprise
+	cd ~/
+	gcenterprise
+	cd ~/enterprise
+	updateenterprise
+	git push
+	git checkout -b $1
+	subl .
+}
 
 
 
