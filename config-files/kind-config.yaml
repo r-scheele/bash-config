@@ -34,3 +34,27 @@ nodes:
       hostPort: 30084
       listenAddress: "127.0.0.1"
       protocol: TCP
+  - role: worker
+    extraPortMappings:
+    - containerPort: 30085
+      hostPort: 30085
+      listenAddress: "127.0.0.1"
+      protocol: TCP
+  - role: worker
+    extraPortMappings:
+    - containerPort: 30086
+      hostPort: 30086
+      listenAddress: "127.0.0.1"
+      protocol: TCP
+  - role: worker
+    extraPortMappings:
+    - containerPort: 30087
+      hostPort: 30087
+      listenAddress: "127.0.0.1"
+      protocol: TCP
+  - role: worker
+    extraPortMappings:
+    - containerPort: 30088
+      hostPort: 30088
+      listenAddress: "127.0.0.1"
+      protocol: TCP
