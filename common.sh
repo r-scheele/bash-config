@@ -41,7 +41,7 @@ function commit() {
 }
 
 function intelcontext() {
-	kubectl config use-context kubernetes-admin@kubernetes
+    kubectl config use-context kubernetes-admin@kubernetes
 }
 
 function gcommit() {
@@ -139,37 +139,43 @@ function updateconsole() {
 }
 
 function updateminio() {
-        git checkout master
-        git remote add upstream git@github.com:minio/minio.git
-        git fetch upstream
-        git rebase upstream/master
-        echo "push if ok"
+    git checkout master
+    git remote add upstream git@github.com:minio/minio.git
+    git fetch upstream
+    git rebase upstream/master
+    echo "push if ok"
 }
 
 function updateenterprise() {
-        git checkout master
-        git remote add upstream git@github.com:miniohq/enterprise.git
-        git fetch upstream
-        git rebase upstream/master
-        echo "push if ok"
+    git checkout master
+    git remote add upstream git@github.com:miniohq/enterprise.git
+    git fetch upstream
+    git rebase upstream/master
+    echo "push if ok"
 }
 
 function squashrh() {
-        git remote add upstream git@github.com:miniohq/release-hub.git
-        git fetch upstream
-        git rebase -i upstream/main
+    git remote add upstream git@github.com:miniohq/release-hub.git
+    git fetch upstream
+    git rebase -i upstream/main
+}
+
+function squashpy() {
+    git remote add upstream git@github.com:minio/minio-py.git
+    git fetch upstream
+    git rebase -i upstream/master
 }
 
 function squashoperator() {
-        git remote add upstream git@github.com:minio/operator.git
-        git fetch upstream
-        git rebase -i upstream/master
+    git remote add upstream git@github.com:minio/operator.git
+    git fetch upstream
+    git rebase -i upstream/master
 }
 
 function squashconsole() {
-        git remote add upstream git@github.com:minio/console.git
-        git fetch upstream
-        git rebase -i upstream/master
+    git remote add upstream git@github.com:minio/console.git
+    git fetch upstream
+    git rebase -i upstream/master
 }
 
 function squashenterprise() {
@@ -179,51 +185,51 @@ function squashenterprise() {
 }
 
 function gcoperator() {
-	git clone git@github.com:cniackz/operator.git
+    git clone git@github.com:cniackz/operator.git
 }
 
 function createConsolePR() {
-	rm -rf ~/console
-	cd ~/
-	gcconsole
-	cd ~/console
-	updateconsole
-	git push
-	git checkout -b $1
-	subl .
+    rm -rf ~/console
+    cd ~/
+    gcconsole
+    cd ~/console
+    updateconsole
+    git push
+    git checkout -b $1
+    subl .
 }
 
 function createRHPR() {
-	rm -rf ~/release-hub
-	cd ~/
-	gcrh
-	cd ~/release-hub
-	updaterh
-	git push
-	git checkout -b $1
-	subl .
+    rm -rf ~/release-hub
+    cd ~/
+    gcrh
+    cd ~/release-hub
+    updaterh
+    git push
+    git checkout -b $1
+    subl .
 }
 
 function createOperatorPR() {
-	rm -rf ~/operator
-	cd ~/
-	gcoperator
-	cd ~/operator
-	updateoperator
-	git push
-	git checkout -b $1
-	subl .
+    rm -rf ~/operator
+    cd ~/
+    gcoperator
+    cd ~/operator
+    updateoperator
+    git push
+    git checkout -b $1
+    subl .
 }
 
 function createEnterprisePR() {
-	rm -rf ~/enterprise
-	cd ~/
-	gcenterprise
-	cd ~/enterprise
-	updateenterprise
-	git push
-	git checkout -b $1
-	subl .
+    rm -rf ~/enterprise
+    cd ~/
+    gcenterprise
+    cd ~/enterprise
+    updateenterprise
+    git push
+    git checkout -b $1
+    subl .
 }
 
 
