@@ -44,6 +44,10 @@ function intelcontext() {
     kubectl config use-context kubernetes-admin@kubernetes
 }
 
+function kindcontext() {
+	kubectl config use-context kind-kind 
+}
+
 function gcommit() {
     git commit -m "${1}"
 }
