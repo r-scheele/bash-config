@@ -115,27 +115,27 @@ function installubuntu() {
 }
 
 function updaterh() {
-        git checkout main
-        git remote add upstream git@github.com:miniohq/release-hub.git
-        git fetch upstream
-        git rebase upstream/main
-        echo "push if ok"
+    git checkout main
+    git remote add upstream git@github.com:miniohq/release-hub.git
+    git fetch upstream
+    git rebase upstream/main
+    echo "push if ok"
 }
 
 function updateoperator() {
-        git checkout master
-        git remote add upstream git@github.com:minio/operator.git
-        git fetch upstream
-        git rebase upstream/master
-        echo "push if ok"
+    git checkout master
+    git remote add upstream git@github.com:minio/operator.git
+    git fetch upstream
+    git rebase upstream/master
+    echo "push if ok"
 }
 
 function updateconsole() {
-        git checkout master
-        git remote add upstream git@github.com:minio/console.git
-        git fetch upstream
-        git rebase upstream/master
-        echo "push if ok"
+    git checkout master
+    git remote add upstream git@github.com:minio/console.git
+    git fetch upstream
+    git rebase upstream/master
+    echo "push if ok"
 }
 
 function updateminio() {
