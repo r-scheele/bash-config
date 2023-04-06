@@ -45,7 +45,7 @@ function intelcontext() {
 }
 
 function kindcontext() {
-	kubectl config use-context kind-kind 
+    kubectl config use-context kind-kind 
 }
 
 function gcommit() {
@@ -236,6 +236,44 @@ function createEnterprisePR() {
     git checkout -b $1
     subl .
 }
+
+function clearMinIO() {
+	rm -rf /Volumes/data1/*
+	rm -rf /Volumes/data2/*
+	rm -rf /Volumes/data3/*
+	rm -rf /Volumes/data4/*
+	rm -rf /Volumes/data1/.minio.sys/
+	rm -rf /Volumes/data2/.minio.sys/
+	rm -rf /Volumes/data3/.minio.sys/
+	rm -rf /Volumes/data4/.minio.sys/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
