@@ -74,7 +74,7 @@ echo $SA_TOKEN
 
 function installoperator() {
     # Make sure to use version or tag so that you don't have to compile against latest master code.
-    k apply -k github.com/minio/operator/resources/\?ref\=v5.0.1
+    k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
     k get service console -n minio-operator -o yaml > ~/service.yaml
     yq e -i '.spec.type="NodePort"' ~/service.yaml
     yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
