@@ -110,8 +110,9 @@ function installoperator() {
 }
 
 function installtenant() {
-    k apply -k ~/operator/examples/kustomization/tenant-lite
-    k apply -f ~/minio/ubuntu.yaml -n tenant-lite
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
+    k apply -f tenant.yaml
+    # k apply -k ~/operator/examples/kustomization/tenant-lite
 }
 
 function installubuntu() {
