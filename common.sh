@@ -197,18 +197,47 @@ function clearMinIO() {
 
 function createPR() {
 
-    REPO=$1
-    BRANCH=$2
+    REPO_TO_CREATE_PR=$1
+    BRANCH_OF_THE_PR=$2
 
-    rm -rf ~/$RESPO
+    echo "Provided parameters are:"
+    echo "REPO_TO_CREATE_PR: ${REPO_TO_CREATE_PR}"
+    echo "BRANCH_OF_THE_PR: ${BRANCH_OF_THE_PR}"
+
+    echo "1. Removing old Repository"
+    echo "rm -rf ~/$REPO_TO_CREATE_PR"
+    rm -rf ~/$REPO_TO_CREATE_PR
+
+    echo "Changing to home directory"
+    echo "cd ~/"
     cd ~/
-    gc $RESPO # git clone repo
-    cd ~/$RESPO
-    update $REPO
+
+    echo "Cloning Repository at Home:"
+    echo "gc $REPO_TO_CREATE_PR"
+    gc $REPO_TO_CREATE_PR # git clone repo
+
+    echo "Changing to cloned repo directory:"
+    echo "cd ~/$REPO_TO_CREATE_PR"
+    cd ~/$REPO_TO_CREATE_PR
+
+    echo "Updating the cloned repo:"
+    echo "update $REPO_TO_CREATE_PR"
+    update $REPO_TO_CREATE_PR
+
+    echo "Pushing changes to update"
+    echo "git push"
     git push
-    git checkout -b $BRANCH
-    subl .
+
+    echo "Creating new branch: ${BRANCH_OF_THE_PR}"
+    echo "git checkout -b $BRANCH_OF_THE_PR"
+    git checkout -b $BRANCH_OF_THE_PR
+
+    echo "To Start working Open sublime here:"
+    echo "subl ."
 }
+
+
+
 
 
 
