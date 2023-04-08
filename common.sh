@@ -24,10 +24,6 @@ alias gpull="git pull"
 alias wb1="git rev-parse --abbrev-ref HEAD"
 alias sshpg="ssh cesar@65.49.37.17 -p 4492"
 alias sshintel="ssh minio@64.71.151.78 -p 4492"
-alias gcrh="git clone git@github.com:cniackz/release-hub.git"
-alias gcconsole="git clone git@github.com:cniackz/console.git"
-alias gcenterprise="git clone git@github.com:cniackz/enterprise.git"
-alias gcminio="cd ~; git clone git@github.com:cniackz/minio-1.git minio-1"
 
 ######################################
 #
@@ -119,46 +115,6 @@ function installubuntu() {
     k apply -f ~/bash-config/config-files/ubuntu.yaml -n $1
 }
 
-function updaterh() {
-    git checkout main
-    git remote add upstream git@github.com:miniohq/release-hub.git
-    git fetch upstream
-    git rebase upstream/main
-    echo "push if ok"
-}
-
-function updateoperator() {
-    git checkout master
-    git remote add upstream git@github.com:minio/operator.git
-    git fetch upstream
-    git rebase upstream/master
-    echo "push if ok"
-}
-
-function updateconsole() {
-    git checkout master
-    git remote add upstream git@github.com:minio/console.git
-    git fetch upstream
-    git rebase upstream/master
-    echo "push if ok"
-}
-
-function updateminio() {
-    git checkout master
-    git remote add upstream git@github.com:minio/minio.git
-    git fetch upstream
-    git rebase upstream/master
-    echo "push if ok"
-}
-
-function updateenterprise() {
-    git checkout master
-    git remote add upstream git@github.com:miniohq/enterprise.git
-    git fetch upstream
-    git rebase upstream/master
-    echo "push if ok"
-}
-
 function squashrh() {
     git remote add upstream git@github.com:miniohq/release-hub.git
     git fetch upstream
@@ -189,64 +145,217 @@ function squashenterprise() {
         git rebase -i upstream/master
 }
 
-function gcoperator() {
-    git clone git@github.com:cniackz/operator.git
-}
-
-function createConsolePR() {
-    rm -rf ~/console
-    cd ~/
-    gcconsole
-    cd ~/console
-    updateconsole
-    git push
-    git checkout -b $1
-    subl .
-}
-
-function createRHPR() {
-    rm -rf ~/release-hub
-    cd ~/
-    gcrh
-    cd ~/release-hub
-    updaterh
-    git push
-    git checkout -b $1
-    subl .
-}
-
-function createOperatorPR() {
-    rm -rf ~/operator
-    cd ~/
-    gcoperator
-    cd ~/operator
-    updateoperator
-    git push
-    git checkout -b $1
-    subl .
-}
-
-function createEnterprisePR() {
-    rm -rf ~/enterprise
-    cd ~/
-    gcenterprise
-    cd ~/enterprise
-    updateenterprise
-    git push
-    git checkout -b $1
-    subl .
-}
-
 function clearMinIO() {
-	rm -rf /Volumes/data1/*
-	rm -rf /Volumes/data2/*
-	rm -rf /Volumes/data3/*
-	rm -rf /Volumes/data4/*
-	rm -rf /Volumes/data1/.minio.sys/
-	rm -rf /Volumes/data2/.minio.sys/
-	rm -rf /Volumes/data3/.minio.sys/
-	rm -rf /Volumes/data4/.minio.sys/
+    rm -rf /Volumes/data1/*
+    rm -rf /Volumes/data2/*
+    rm -rf /Volumes/data3/*
+    rm -rf /Volumes/data4/*
+    rm -rf /Volumes/data1/.minio.sys/
+    rm -rf /Volumes/data2/.minio.sys/
+    rm -rf /Volumes/data3/.minio.sys/
+    rm -rf /Volumes/data4/.minio.sys/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########################################
+#
+# Create PR
+#
+##########################################
+
+function createPR() {
+
+    REPO=$1
+    BRANCH=$2
+
+    rm -rf ~/$RESPO
+    cd ~/
+    gc $RESPO # git clone repo
+    cd ~/$RESPO
+    update $REPO
+    git push
+    git checkout -b $BRANCH
+    subl .
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# Clone Function
+#
+######################################
+
+# Git Clone <Repo>
+# gc enterprise
+# gc operator
+# gc minio-1
+# gc rh
+# gc console
+function gc() {
+    REPO=$1
+    git clone git@github.com:cniackz/${REPO}.git
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# Update function
+#
+######################################
+
+function update() {
+
+    # We receive only one parameter and from there we determine values
+    REPO=$1
+
+    if [ "$REPO" == "enterprise" ]
+    then
+        REPO=enterprise
+        BRANCH=master
+        ACCOUNT=miniohq
+    fi
+
+    if [ "$REPO" == "rh" ]
+    then
+        REPO=release-hub
+        BRANCH=main
+        ACCOUNT=miniohq
+    fi
+
+    if [ "$REPO" == "operator" ]
+    then
+        REPO=operator
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
+    if [ "$REPO" == "console" ]
+    then
+        REPO=console
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
+    if [ "$REPO" == "minio" ]
+    then
+        REPO=minio
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
+    git checkout $BRANCH
+    git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
+    git fetch upstream
+    git rebase upstream/$BRANCH
+    echo "push if ok"
+
+}
+
+
+
+
+
+
+
 
 
 
