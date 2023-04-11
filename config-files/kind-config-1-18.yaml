@@ -5,35 +5,35 @@ networking:
   apiServerPort: 6443
 nodes:
   - role: control-plane
-    image: kindest/node:v1.18
+    image: kindest/node:v1.18.19
     extraPortMappings:
     - containerPort: 30080
       hostPort: 30080
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-    image: kindest/node:v1.18
+    image: kindest/node:v1.18.19
     extraPortMappings:
     - containerPort: 30081
       hostPort: 30081
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-    image: kindest/node:v1.18
+    image: kindest/node:v1.18.19
     extraPortMappings:
     - containerPort: 30082
       hostPort: 30082
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-    image: kindest/node:v1.18
+    image: kindest/node:v1.18.19
     extraPortMappings:
     - containerPort: 30083
       hostPort: 30083
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-    image: kindest/node:v1.18
+    image: kindest/node:v1.18.19
     extraPortMappings:
     - containerPort: 30084
       hostPort: 30084
