@@ -26,14 +26,14 @@ nodes:
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-	image: kindest/node:v1.18
+    image: kindest/node:v1.18
     extraPortMappings:
     - containerPort: 30083
       hostPort: 30083
       listenAddress: "127.0.0.1"
       protocol: TCP
   - role: worker
-	image: kindest/node:v1.18
+    image: kindest/node:v1.18
     extraPortMappings:
     - containerPort: 30084
       hostPort: 30084
