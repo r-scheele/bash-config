@@ -50,12 +50,17 @@ function gcommit() {
 
 function createcluster() {
     NODES=$1
+    VERSION=$NODES
     CONFIG_FILE=~/bash-config/config-files/kind-config.yaml # Default 4 nodes
     if [ "$NODES" == "8" ]
     then
         # It selected, it could be up to 8 nodes for testing
         CONFIG_FILE=~/bash-config/config-files/kind-config-8-nodes.yaml
     fi
+    if [ "$VERSION" == "118" ]
+    then
+		CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
+	fi
     kind delete cluster
     kind create cluster --config $CONFIG_FILE
 }
