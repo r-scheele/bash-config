@@ -53,10 +53,17 @@ spec:
   mountPath: /export
   podManagementPolicy: Parallel
   pools:
-  - containerSecurityContext:
-      runAsGroup: 1000
-      runAsNonRoot: true
-      runAsUser: 1000
+  - affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: v1.min.io/tenant
+              operator: In
+              values:
+              - myminio
+          topologyKey: kubernetes.io/hostname
+    containerSecurityContext: {}
     name: pool-0
     servers: 4
     volumeClaimTemplate:
