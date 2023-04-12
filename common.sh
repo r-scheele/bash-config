@@ -120,8 +120,8 @@ function installoperator() {
 }
 
 function installtenant() {
-    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
-    k apply -f tenant.yaml
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/tenant-5-0-3.yaml
     # k apply -k ~/operator/examples/kustomization/tenant-lite
 }
 
