@@ -56,13 +56,27 @@ function createcluster() {
     then
         # It selected, it could be up to 8 nodes for testing
         CONFIG_FILE=~/bash-config/config-files/kind-config-8-nodes.yaml
+
+        # To put pool one in these nodes:
+        kubectl label nodes kind-worker5 pool=one
+        kubectl label nodes kind-worker6 pool=one
+        kubectl label nodes kind-worker7 pool=one
+        kubectl label nodes kind-worker8 pool=one
+
     fi
     if [ "$VERSION" == "118" ]
     then
-		CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
-	fi
+        CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
+    fi
     kind delete cluster
     kind create cluster --config $CONFIG_FILE
+
+    # To put pool-0 in these nodes:
+    kubectl label nodes kind-worker  pool=zero
+    kubectl label nodes kind-worker2 pool=zero
+    kubectl label nodes kind-worker3 pool=zero
+    kubectl label nodes kind-worker4 pool=zero
+
 }
 
 function JWTOperator() {
