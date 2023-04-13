@@ -114,7 +114,7 @@ function installoperator() {
         helm install \
              --namespace minio-operator \
              --create-namespace \
-             minio-operator ./operator-4.5.8.tgz
+             minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
     fi
 
     k get service console -n minio-operator -o yaml > ~/service.yaml
