@@ -188,7 +188,7 @@ function installtenant() {
         helm install \
           --namespace tenant-ns \
           --create-namespace \
-          tenant-ns ./tenant-4.5.8.tgz
+          tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.8.tgz
     fi
 
 }
