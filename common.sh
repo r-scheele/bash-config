@@ -102,6 +102,20 @@ echo ""
 echo ""
 }
 
+function upgradeoperator() {
+
+    METHOD=$1
+    VERION=$2
+
+    if [ "$METHOD" == "helm" ]
+    then
+        helm upgrade \
+             --namespace minio-operator \
+             minio-operator /Users/cniackz/bash-config/config-files/operator-5.0.3.tgz
+    fi
+
+}
+
 function installoperator() {
 
     METHOD=$1
@@ -158,9 +172,25 @@ function installoperator() {
 }
 
 function installtenant() {
-    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
-    k apply -f /Users/cniackz/bash-config/config-files/tenant-5-0-3.yaml
-    # k apply -k ~/operator/examples/kustomization/tenant-lite
+
+    METHOD=$1
+    VERSION=$2
+
+    if [ "$METHOD" == "kustomize" ]
+    then
+        # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
+        k apply -f /Users/cniackz/bash-config/config-files/tenant-5-0-3.yaml
+        # k apply -k ~/operator/examples/kustomization/tenant-lite
+    fi
+
+    if [ "$METHOD" == "helm" ]
+    then
+        helm install \
+          --namespace tenant-ns \
+          --create-namespace \
+          tenant-ns ./tenant-4.5.8.tgz
+    fi
+
 }
 
 function installubuntu() {
