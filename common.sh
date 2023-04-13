@@ -56,13 +56,6 @@ function createcluster() {
     then
         # It selected, it could be up to 8 nodes for testing
         CONFIG_FILE=~/bash-config/config-files/kind-config-8-nodes.yaml
-
-        # To put pool one in these nodes:
-        kubectl label nodes kind-worker5 pool=one
-        kubectl label nodes kind-worker6 pool=one
-        kubectl label nodes kind-worker7 pool=one
-        kubectl label nodes kind-worker8 pool=one
-
     fi
     if [ "$VERSION" == "118" ]
     then
@@ -76,6 +69,15 @@ function createcluster() {
     kubectl label nodes kind-worker2 pool=zero
     kubectl label nodes kind-worker3 pool=zero
     kubectl label nodes kind-worker4 pool=zero
+
+    if [ "$NODES" == "8" ]
+    then
+        # To put pool one in these nodes:
+        kubectl label nodes kind-worker5 pool=one
+        kubectl label nodes kind-worker6 pool=one
+        kubectl label nodes kind-worker7 pool=one
+        kubectl label nodes kind-worker8 pool=one
+    fi
 
 }
 
