@@ -54,6 +54,8 @@ spec:
   podManagementPolicy: Parallel
   pools:
   - name: pool-0
+    nodeSelector:
+      pool: zero
     servers: 4
     volumeClaimTemplate:
       metadata:
