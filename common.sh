@@ -93,7 +93,13 @@ metadata:
 type: kubernetes.io/service-account-token
 EOF
 SA_TOKEN=$(kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
+echo ""
+echo ""
+echo ""
 echo $SA_TOKEN
+echo ""
+echo ""
+echo ""
 }
 
 function installoperator() {
