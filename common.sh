@@ -61,6 +61,11 @@ function createcluster() {
     then
         CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
     fi
+	if [ "$1" == "ingress" ]
+	then
+		CONFIG_FILE=~/bash-config/config-files/kind-config-ingress.yaml
+	fi
+
     kind delete cluster
     kind create cluster --config $CONFIG_FILE
 
