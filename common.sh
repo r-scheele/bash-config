@@ -36,14 +36,6 @@ function commit() {
     git push
 }
 
-function intelcontext() {
-    kubectl config use-context kubernetes-admin@kubernetes
-}
-
-function kindcontext() {
-    kubectl config use-context kind-kind 
-}
-
 function gcommit() {
     git commit -m "${1}"
 }
@@ -482,6 +474,55 @@ function update() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# The k8s contexts
+#
+######################################
+
+function intelcontext() {
+    kubectl config use-context kubernetes-admin@kubernetes
+}
+
+function kindcontext() {
+    kubectl config use-context kind-kind
+}
+
+function dpcontext() {
+	kubectl config use-context
+}
 
 
 
