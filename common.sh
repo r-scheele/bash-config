@@ -53,10 +53,10 @@ function createcluster() {
     then
         CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
     fi
-	if [ "$1" == "ingress" ]
-	then
-		CONFIG_FILE=~/bash-config/config-files/kind-config-ingress.yaml
-	fi
+    if [ "$1" == "ingress" ]
+    then
+        CONFIG_FILE=~/bash-config/config-files/kind-config-ingress.yaml
+    fi
 
     kind delete cluster
     kind create cluster --config $CONFIG_FILE
@@ -120,10 +120,15 @@ function installoperator() {
 
     if [ "$METHOD" == "kustomize" ]
     then
-        # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
-        # Make sure to use version or tag so that you don't have to compile against latest master code.
-        # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
-        k apply -f /Users/cniackz/bash-config/config-files/operator-5-0-3.yaml
+        if [ "$VERSION" == "4.5.8" ]
+        then
+            k apply -k github.com/minio/operator/resources/\?ref\=v4.5.8
+        else
+            # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
+            # Make sure to use version or tag so that you don't have to compile against latest master code.
+            # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
+            k apply -f /Users/cniackz/bash-config/config-files/operator-5-0-3.yaml
+        fi
     fi
 
     if [ "$METHOD" == "helm" ]
@@ -521,7 +526,7 @@ function kindcontext() {
 }
 
 function dpcontext() {
-	kubectl config use-context
+    kubectl config use-context
 }
 
 
