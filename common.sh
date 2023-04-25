@@ -434,6 +434,13 @@ function update() {
         ACCOUNT=miniohq
     fi
 
+    if [ "$REPO" == "dcos" ]
+    then
+        REPO=docs
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
     if [ "$REPO" == "operator" ]
     then
         REPO=operator
