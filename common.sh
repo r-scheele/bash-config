@@ -437,7 +437,7 @@ function update() {
     if [ "$REPO" == "dcos" ]
     then
         REPO=docs
-        BRANCH=master
+        BRANCH=main
         ACCOUNT=minio
     fi
 
