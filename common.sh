@@ -465,6 +465,13 @@ function update() {
         ACCOUNT=minio
     fi
 
+    if [ "$REPO" == "directpv" ]
+    then
+        REPO=directpv
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
     if [ "$REPO" == "console" ]
     then
         REPO=console
