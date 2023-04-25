@@ -222,6 +222,12 @@ function squashrh() {
     git rebase -i upstream/main
 }
 
+function squashdp() {
+    git remote add upstream git@github.com:minio/directpv.git
+    git fetch upstream
+    git rebase -i upstream/master
+}
+
 function squashpy() {
     git remote add upstream git@github.com:minio/minio-py.git
     git fetch upstream
