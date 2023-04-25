@@ -23,6 +23,7 @@
 ######################################
 export OPERATOR_DEV_TEST="ON"
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+export PATH="${PATH}:${HOME}/.krew/bin"
 
 ######################################
 #
