@@ -150,10 +150,22 @@ function installoperator() {
 
     if [ "$METHOD" == "helm" ]
     then
-        helm install \
-             --namespace minio-operator \
-             --create-namespace \
-             minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
+
+        if [ "$VERSION" == "4.5.8" ]
+        then
+            helm install \
+                 --namespace minio-operator \
+                 --create-namespace \
+                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
+        fi
+
+        if [ "$VERSION" == "4.5.3" ]
+        then
+            helm install \
+                 --namespace minio-operator \
+                 --create-namespace \
+                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.3.tgz
+        fi
     fi
 
     k get service console -n minio-operator -o yaml > ~/service.yaml
