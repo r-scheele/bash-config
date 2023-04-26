@@ -230,10 +230,20 @@ function installtenant() {
 
     if [ "$METHOD" == "helm" ]
     then
-        helm install \
-          --namespace tenant-ns \
-          --create-namespace \
-          tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.8.tgz
+        if [ "$VERSION" == "4.5.8" ]
+        then
+            helm install \
+              --namespace tenant-ns \
+              --create-namespace \
+              tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.8.tgz
+        fi
+        if [ "$VERSION" == "4.5.3" ]
+        then
+            helm install \
+              --namespace tenant-ns \
+              --create-namespace \
+              tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.3.tgz
+        fi
     fi
 
 }
