@@ -123,9 +123,18 @@ function upgradeoperator() {
 
     if [ "$METHOD" == "helm" ]
     then
-        helm upgrade \
-             --namespace minio-operator \
-             minio-operator /Users/cniackz/bash-config/config-files/operator-5.0.3.tgz
+        if [ "$VERSION" == "5.0.3" ]
+        then
+            helm upgrade \
+                 --namespace minio-operator \
+                 minio-operator /Users/cniackz/bash-config/config-files/operator-5.0.3.tgz
+        fi
+        if [ "$VERSION" == "4.5.8" ]
+        then
+            helm upgrade \
+                 --namespace minio-operator \
+                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
+        fi
     fi
 
 }
