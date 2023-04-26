@@ -120,7 +120,7 @@ function upgradeoperator() {
 
     METHOD=$1
     echo "METHOD: ${METHOD}"
-    VERION=$2
+    VERSION=$2
     echo "VERSION: ${VERSION}"
 
     if [ "$METHOD" == "helm" ]
