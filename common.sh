@@ -123,7 +123,7 @@ function upgradetenant() {
     echo " "; echo " "; echo " ";
 
     echo "Upgrade:"
-    helm upgrade --namespace tenant-ns tenant-ns /Users/cniackz/bash-config/config-files/tenant-5.0.3.tgz
+    helm upgrade --namespace tenant-ns tenant-ns /Users/cniackz/bash-config/config-files/tenant-5.0.3
     echo " "; echo " "; echo " ";
 
     echo "New version:"
