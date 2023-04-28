@@ -116,6 +116,10 @@ echo ""
 echo ""
 }
 
+function upgradetenant() {
+    helm upgrade --namespace tenant-ns tenant-ns ./tenant-5.0.3.tgz
+}
+
 function upgradeoperator() {
 
     METHOD=$1
