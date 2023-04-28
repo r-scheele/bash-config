@@ -117,7 +117,19 @@ echo ""
 }
 
 function upgradetenant() {
+
+    echo "Current version:"
+    helm list -n tenant-ns
+    echo " "; echo " "; echo " ";
+
+    echo "Upgrade:"
     helm upgrade --namespace tenant-ns tenant-ns ./tenant-5.0.3.tgz
+    echo " "; echo " "; echo " ";
+
+    echo "New version:"
+    helm list -n tenant-ns
+    echo " "; echo " "; echo " ";
+
 }
 
 function upgradeoperator() {
