@@ -367,6 +367,13 @@ function createPR() {
     #     ACCOUNT=none
     convert_short_name_to_proper_name
 
+    echo "If repo is not set, we can't continue..."
+    if [ -z "$REPO" ]
+    then
+        echo "createPR(): REPO is empty, stop here"
+        exit 1
+    fi
+
     echo "Provided parameters are:"
     echo "REPO: ${REPO}"
     echo "BRANCH: ${BRANCH}"
@@ -486,12 +493,10 @@ function gc() {
 # Helper functions
 #
 ######################################
-REPO=none
-BRANCH=none
-ACCOUNT=none
+
 function convert_short_name_to_proper_name() {
 
-    # We receive only one parameter and from there we determine values
+    echo "convert_short_name_to_proper_name(): We receive only one parameter and from there we determine values"
     REPO=$1
 
     if [ "$REPO" == "enterprise" ]
