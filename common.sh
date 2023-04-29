@@ -550,6 +550,7 @@ function convert_short_name_to_proper_name() {
 
     if [ "$REPO" == "rm" ]
     then
+        echo "convert_short_name_to_proper_name(): REPO is rm then REPO will be release-manager"
         REPO=release-manager
         BRANCH=master
         ACCOUNT=miniohq
