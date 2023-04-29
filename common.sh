@@ -353,43 +353,51 @@ function clearMinIO() {
 # Create PR
 #
 ##########################################
-
+REPO=none
+BRANCH=none
+ACCOUNT=none
 function createPR() {
 
-    REPO_TO_CREATE_PR=$1
-    BRANCH_OF_THE_PR=$2
+    REPO=$1
+    BRANCH=$2
+
+    # It gets the values for:
+    #     REPO=none
+    #     BRANCH=none
+    #     ACCOUNT=none
+    convert_short_name_to_proper_name
 
     echo "Provided parameters are:"
-    echo "REPO_TO_CREATE_PR: ${REPO_TO_CREATE_PR}"
-    echo "BRANCH_OF_THE_PR: ${BRANCH_OF_THE_PR}"
+    echo "REPO: ${REPO}"
+    echo "BRANCH: ${BRANCH}"
 
     echo "1. Removing old Repository"
-    echo "rm -rf ~/$REPO_TO_CREATE_PR"
-    rm -rf ~/$REPO_TO_CREATE_PR
+    echo "rm -rf ~/$REPO"
+    rm -rf ~/$REPO
 
     echo "Changing to home directory"
     echo "cd ~/"
     cd ~/
 
     echo "Cloning Repository at Home:"
-    echo "gc $REPO_TO_CREATE_PR"
-    gc $REPO_TO_CREATE_PR # git clone repo
+    echo "gc $REPO"
+    gc $REPO # git clone repo
 
     echo "Changing to cloned repo directory:"
-    echo "cd ~/$REPO_TO_CREATE_PR"
-    cd ~/$REPO_TO_CREATE_PR
+    echo "cd ~/$REPO"
+    cd ~/$REPO
 
     echo "Updating the cloned repo:"
-    echo "update $REPO_TO_CREATE_PR"
-    update $REPO_TO_CREATE_PR
+    echo "update $REPO"
+    update $REPO
 
     echo "Pushing changes to update"
     echo "git push"
     git push
 
-    echo "Creating new branch: ${BRANCH_OF_THE_PR}"
-    echo "git checkout -b $BRANCH_OF_THE_PR"
-    git checkout -b $BRANCH_OF_THE_PR
+    echo "Creating new branch: ${BRANCH}"
+    echo "git checkout -b $BRANCH"
+    git checkout -b $BRANCH
 
     echo "To Start working Open sublime here:"
     echo "subl ."
@@ -473,24 +481,15 @@ function gc() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 ######################################
 #
-# Update function
+# Helper functions
 #
 ######################################
-
-function update() {
+REPO=none
+BRANCH=none
+ACCOUNT=none
+function convert_short_name_to_proper_name() {
 
     # We receive only one parameter and from there we determine values
     REPO=$1
@@ -550,6 +549,27 @@ function update() {
         BRANCH=master
         ACCOUNT=miniohq
     fi
+
+}
+
+
+
+
+
+
+
+
+######################################
+#
+# Update function
+#
+######################################
+
+function update() {
+
+    # We receive only one parameter and from there we determine values
+    REPO=$1
+    convert_short_name_to_proper_name
 
     git checkout $BRANCH
     git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
