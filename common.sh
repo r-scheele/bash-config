@@ -359,13 +359,13 @@ ACCOUNT=none
 function createPR() {
 
     REPO=$1
-    BRANCH=$2
+    NEW_BRANCH_FOR_PR=$2 # This is different than original branch BRANCH wich normally is master or main
 
     # It gets the values for:
     #     REPO=none
     #     BRANCH=none
     #     ACCOUNT=none
-    convert_short_name_to_proper_name
+    convert_short_name_to_proper_name $REPO
 
     echo "If repo is not set, we can't continue..."
     if [ -z "$REPO" ]
@@ -376,7 +376,7 @@ function createPR() {
 
     echo "Provided parameters are:"
     echo "REPO: ${REPO}"
-    echo "BRANCH: ${BRANCH}"
+    echo "NEW_BRANCH_FOR_PR: ${NEW_BRANCH_FOR_PR}"
 
     echo "1. Removing old Repository"
     echo "rm -rf ~/$REPO"
@@ -402,9 +402,9 @@ function createPR() {
     echo "git push"
     git push
 
-    echo "Creating new branch: ${BRANCH}"
-    echo "git checkout -b $BRANCH"
-    git checkout -b $BRANCH
+    echo "Creating new branch: ${NEW_BRANCH_FOR_PR}"
+    echo "git checkout -b $NEW_BRANCH_FOR_PR"
+    git checkout -b $NEW_BRANCH_FOR_PR
 
     echo "To Start working Open sublime here:"
     echo "subl ."
