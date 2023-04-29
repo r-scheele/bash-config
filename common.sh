@@ -544,6 +544,13 @@ function update() {
         ACCOUNT=minio
     fi
 
+    if [ "$REPO" == "rm" ]
+    then
+        REPO=release-manager
+        BRANCH=master
+        ACCOUNT=miniohq
+    fi
+
     git checkout $BRANCH
     git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
     git fetch upstream
