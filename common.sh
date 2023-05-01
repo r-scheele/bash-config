@@ -26,6 +26,7 @@ export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH=/Library/PostgreSQL/15/bin:$PATH # To have psql
 export POSTGRESQL_URL='postgres://postgres:testing123@localhost:5432/change_manager?sslmode=disable'
+export CONFIG_FILES=/Users/cniackz/bash-config/config-files
 
 ######################################
 #
@@ -168,7 +169,6 @@ function installoperator() {
     METHOD=$1
     VERSION=$2
     NAMESPACE=$3
-    CONFIG_FILES=/Users/cniackz/bash-config/config-files
 
     if [ "$1" == "help" ]
     then
@@ -258,36 +258,34 @@ function installtenant() {
 
     METHOD=$1
     VERSION=$2
+    NAMESPACE=$3
+
+    if [ -z "$NAMESPACE" ]
+    then
+        NAMESPACE=tenant-ns
+    fi
 
     if [ "$METHOD" == "kustomize" ]
     then
         # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
-        k apply -f /Users/cniackz/bash-config/config-files/tenant-5-0-3.yaml
+        k apply -f $CONFIG_FILES/tenant-5-0-3.yaml
         # k apply -k ~/operator/examples/kustomization/tenant-lite
     fi
 
     if [ "$METHOD" == "helm" ]
     then
-        if [ "$VERSION" == "4.5.8" ]
-        then
-            helm install \
-              --namespace tenant-ns \
-              --create-namespace \
-              tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.8
-        fi
-        if [ "$VERSION" == "4.5.3" ]
-        then
-            helm install \
-              --namespace tenant-ns \
-              --create-namespace \
-              tenant-ns /Users/cniackz/bash-config/config-files/tenant-4.5.3.tgz
-        fi
+
+        helm install \
+          --namespace $NAMESPACE \
+          --create-namespace $NAMESPACE \
+          $CONFIG_FILES/helm/Tenant/tenant-$VERSION
+
     fi
 
 }
 
 function installubuntu() {
-    k apply -f ~/bash-config/config-files/ubuntu.yaml -n $1
+    k apply -f $CONFIG_FILES/others/ubuntu.yaml -n $1
 }
 
 function squashrh() {
