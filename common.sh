@@ -203,17 +203,18 @@ function installoperator() {
              --namespace $NAMESPACE \
              --create-namespace $NAMESPACE \
              /Users/cniackz/bash-config/config-files/helm/Operator/operator-"$VERSION"
+
     fi
 
-    k get service console -n minio-operator -o yaml > ~/service.yaml
+    k get service console -n $NAMESPACE -o yaml > ~/service.yaml
     yq e -i '.spec.type="NodePort"' ~/service.yaml
     yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
     k apply -f ~/service.yaml
-    k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
+    k get deployment minio-operator -n $NAMESPACE -o yaml > ~/operator.yaml
     yq -i -e '.spec.replicas |= 1' ~/operator.yaml
     k apply -f ~/operator.yaml
     k apply -f ~/bash-config/config-files/console-secret.yaml
-    SA_TOKEN=$(k -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
+    SA_TOKEN=$(k -n $NAMESPACE  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
     echo ""
     echo ""
     echo ""
