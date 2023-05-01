@@ -62,19 +62,20 @@ function gcommit() {
 function createcluster() {
     NODES=$1
     VERSION=$NODES
-    CONFIG_FILE=~/bash-config/config-files/kind-config.yaml # Default 4 nodes
+    KIND_FOLDER=~/bash-config/config-files/kind
+    CONFIG_FILE=$KIND_FOLDER/kind-config.yaml # Default 4 nodes
     if [ "$NODES" == "8" ]
     then
         # It selected, it could be up to 8 nodes for testing
-        CONFIG_FILE=~/bash-config/config-files/kind-config-8-nodes.yaml
+        CONFIG_FILE=$KIND_FOLDER/kind-config-8-nodes.yaml
     fi
     if [ "$VERSION" == "118" ]
     then
-        CONFIG_FILE=~/bash-config/config-files/kind-config-1-18.yaml
+        CONFIG_FILE=$KIND_FOLDER/kind-config-1-18.yaml
     fi
     if [ "$1" == "ingress" ]
     then
-        CONFIG_FILE=~/bash-config/config-files/kind-config-ingress.yaml
+        CONFIG_FILE=$KIND_FOLDER/kind-config-ingress.yaml
     fi
 
     kind delete cluster
@@ -169,35 +170,25 @@ function installoperator() {
 
     if [ "$METHOD" == "kustomize" ]
     then
-        if [ "$VERSION" == "4.5.8" ]
+        if [ -z "$VERSION" ]
         then
-            k apply -k github.com/minio/operator/resources/\?ref\=v4.5.8
+            k apply -k github.com/minio/operator/resources/\?ref\=v"$VERSION"
         else
             # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
             # Make sure to use version or tag so that you don't have to compile against latest master code.
             # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
-            k apply -f /Users/cniackz/bash-config/config-files/operator-5-0-3.yaml
+            k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-3.yaml
         fi
     fi
 
     if [ "$METHOD" == "helm" ]
     then
 
-        if [ "$VERSION" == "4.5.8" ]
-        then
-            helm install \
-                 --namespace minio-operator \
-                 --create-namespace \
-                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
-        fi
+        helm install \
+             --namespace minio-operator \
+             --create-namespace \
+             minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/operator-"$VERSION"
 
-        if [ "$VERSION" == "4.5.3" ]
-        then
-            helm install \
-                 --namespace minio-operator \
-                 --create-namespace \
-                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.3.tgz
-        fi
     fi
 
     k get service console -n minio-operator -o yaml > ~/service.yaml
