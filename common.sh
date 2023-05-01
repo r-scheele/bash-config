@@ -122,12 +122,16 @@ echo ""
 
 function upgradetenant() {
 
+    METHOD=$1
+    VERSION=$2
+    NAMESPACE=$3
+
     echo "Current version:"
     helm list -n tenant-ns
     echo " "; echo " "; echo " ";
 
     echo "Upgrade:"
-    helm upgrade --namespace tenant-ns tenant-ns /Users/cniackz/bash-config/config-files/tenant-5.0.3
+    helm upgrade --namespace $NAMESPACE tenant-ns $CONFIG_FILES/tenant-$VERSION
     echo " "; echo " "; echo " ";
 
     echo "New version:"
