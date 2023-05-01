@@ -131,7 +131,7 @@ function upgradetenant() {
     echo " "; echo " "; echo " ";
 
     echo "Upgrade:"
-    helm upgrade --namespace $NAMESPACE tenant-ns $CONFIG_FILES/tenant-$VERSION
+    helm upgrade --namespace $NAMESPACE tenant-ns $CONFIG_FILES/helm/Tenant/tenant-$VERSION
     echo " "; echo " "; echo " ";
 
     echo "New version:"
