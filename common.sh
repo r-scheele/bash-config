@@ -143,23 +143,18 @@ function upgradeoperator() {
     VERSION=$2
     echo "VERSION: ${VERSION}"
 
+    if [ -z "$VERSION" ]
+    then
+        echo "ERROR: Version is needed"
+        return 0
+    fi
+
     if [ "$METHOD" == "helm" ]
     then
         echo "Upgrading via Helm..."
-        if [ "$VERSION" == "5.0.3" ]
-        then
-            echo "Upgrading to version 5.0.3..."
-            helm upgrade \
-                 --namespace minio-operator \
-                 minio-operator /Users/cniackz/bash-config/config-files/operator-5.0.3.tgz
-        fi
-        if [ "$VERSION" == "4.5.8" ]
-        then
-            echo "Upgrading to version 4.5.8..."
-            helm upgrade \
-                 --namespace minio-operator \
-                 minio-operator /Users/cniackz/bash-config/config-files/operator-4.5.8.tgz
-        fi
+        helm upgrade \
+             --namespace minio-operator \
+             minio-operator $CONFIG_FILES/helm/Operator/operator-$VERSION
     fi
 
 }
