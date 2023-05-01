@@ -168,6 +168,18 @@ function installoperator() {
     METHOD=$1
     VERSION=$2
     NAMESPACE=$3
+    HELP=$4
+
+    if [ -z "$HELP" ]
+    then
+        echo "installoperator(): no help is needed proceed"
+    else
+        echo "installoperator(): Examples"
+        echo "installoperator(): installoperator METHOD VERSION NAMESPACE"
+        echo "installoperator(): METHOD:  Kustomize or Helm"
+        echo "installoperator(): VERSION: 4.5.8, 5.0.3, etc."
+        echo "installoperator(): NAMESPACE: minio-operator, tenant-lite, etc."
+    fi
 
     DEFAULT_METHOD=kustomize
     echo "installoperator(): If no method is provided, then $DEFAULT_METHOD is default method."
