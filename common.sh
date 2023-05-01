@@ -168,12 +168,9 @@ function installoperator() {
     METHOD=$1
     VERSION=$2
     NAMESPACE=$3
-    HELP=$4
 
-    if [ -z "$HELP" ]
+    if [ "$1" == "help" ]
     then
-        echo "installoperator(): no help is needed proceed"
-    else
         echo "installoperator(): Examples"
         echo "installoperator(): installoperator METHOD VERSION NAMESPACE"
         echo "installoperator(): METHOD:  Kustomize or Helm"
