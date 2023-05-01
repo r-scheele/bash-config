@@ -142,6 +142,7 @@ function upgradeoperator() {
     echo "METHOD: ${METHOD}"
     VERSION=$2
     echo "VERSION: ${VERSION}"
+    NAMESPACE=$3
 
     if [ -z "$VERSION" ]
     then
@@ -149,11 +150,18 @@ function upgradeoperator() {
         return 0
     fi
 
+    if [ -z "$NAMESPACE" ]
+    then
+        echo "ERROR: Namespace is needed"
+        return 0
+    fi
+
     if [ "$METHOD" == "helm" ]
     then
         echo "Upgrading via Helm..."
+        helm list -n $NAMESPACE
         helm upgrade \
-             --namespace minio-operator \
+             --namespace $NAMESPACE \
              minio-operator $CONFIG_FILES/helm/Operator/operator-$VERSION
     fi
 
