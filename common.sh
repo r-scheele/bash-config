@@ -167,17 +167,32 @@ function installoperator() {
 
     METHOD=$1
     VERSION=$2
+    NAMESPACE=$3
+
+    DEFAULT_METHOD=kustomize
+    echo "installoperator(): If no method is provided, then $DEFAULT_METHOD is default method."
+    if [ -z "$METHOD" ]
+    then
+        METHOD=$DEFAULT_METHOD
+    fi
+
+    DEFAULT_NAMESPACE=minio-operator
+    echo "installoperator(): If no namespace is provided, then $DEFAULT_NAMESPACE is default namespace."
+    if [ -z "$NAMESPACE" ]
+    then
+        NAMESPACE=$DEFAULT_NAMESPACE
+    fi
 
     if [ "$METHOD" == "kustomize" ]
     then
         if [ -z "$VERSION" ]
         then
-            k apply -k github.com/minio/operator/resources/\?ref\=v"$VERSION"
-        else
             # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
             # Make sure to use version or tag so that you don't have to compile against latest master code.
             # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
             k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-3.yaml
+        else
+            k apply -k github.com/minio/operator/resources/\?ref\=v"$VERSION"
         fi
     fi
 
@@ -185,10 +200,9 @@ function installoperator() {
     then
 
         helm install \
-             --namespace minio-operator \
-             --create-namespace \
-             minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/operator-"$VERSION"
-
+             --namespace $NAMESPACE \
+             --create-namespace $NAMESPACE \
+             /Users/cniackz/bash-config/config-files/helm/Operator/operator-"$VERSION"
     fi
 
     k get service console -n minio-operator -o yaml > ~/service.yaml
