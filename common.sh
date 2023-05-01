@@ -171,11 +171,14 @@ function installoperator() {
 
     if [ "$1" == "help" ]
     then
-        echo "installoperator(): Examples"
+        echo "installoperator(): Examples:"
         echo "installoperator(): installoperator METHOD VERSION NAMESPACE"
         echo "installoperator(): METHOD:  Kustomize or Helm"
         echo "installoperator(): VERSION: 4.5.8, 5.0.3, etc."
         echo "installoperator(): NAMESPACE: minio-operator, tenant-lite, etc."
+        echo "installoperator():"
+        echo "installoperator(): Below install Operator version 5.0.4 in tenant-lite namespace:"
+        echo "installoperator(): installoperator helm 5.0.4 tenant-lite"
         return
     fi
 
