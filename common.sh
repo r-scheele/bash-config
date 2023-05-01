@@ -163,6 +163,7 @@ function upgradeoperator() {
         helm upgrade \
              --namespace $NAMESPACE \
              minio-operator $CONFIG_FILES/helm/Operator/operator-$VERSION
+        helm list -n $NAMESPACE
     fi
 
 }
