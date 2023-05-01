@@ -176,6 +176,7 @@ function installoperator() {
         echo "installoperator(): METHOD:  Kustomize or Helm"
         echo "installoperator(): VERSION: 4.5.8, 5.0.3, etc."
         echo "installoperator(): NAMESPACE: minio-operator, tenant-lite, etc."
+        exit 0
     fi
 
     DEFAULT_METHOD=kustomize
