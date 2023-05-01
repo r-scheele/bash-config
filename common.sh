@@ -168,6 +168,7 @@ function installoperator() {
     METHOD=$1
     VERSION=$2
     NAMESPACE=$3
+    CONFIG_FILES=/Users/cniackz/bash-config/config-files
 
     if [ "$1" == "help" ]
     then
@@ -203,7 +204,7 @@ function installoperator() {
             # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
             # Make sure to use version or tag so that you don't have to compile against latest master code.
             # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
-            k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-3.yaml
+            k apply -f $CONFIG_FILES/kustomize/Operator/operator-5-0-3.yaml
         else
             k apply -k github.com/minio/operator/resources/\?ref\=v"$VERSION"
         fi
@@ -215,7 +216,7 @@ function installoperator() {
         helm install \
              --namespace $NAMESPACE \
              --create-namespace $NAMESPACE \
-             /Users/cniackz/bash-config/config-files/helm/Operator/operator-"$VERSION"
+             $CONFIG_FILES/helm/Operator/operator-"$VERSION"
 
     fi
 
@@ -226,7 +227,7 @@ function installoperator() {
     k get deployment minio-operator -n $NAMESPACE -o yaml > ~/operator.yaml
     yq -i -e '.spec.replicas |= 1' ~/operator.yaml
     k apply -f ~/operator.yaml
-    k apply -f ~/bash-config/config-files/console-secret.yaml
+    k apply -f $CONFIG_FILES/others/console-secret.yaml
     SA_TOKEN=$(k -n $NAMESPACE  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
     echo ""
     echo ""
