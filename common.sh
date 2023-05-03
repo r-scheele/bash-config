@@ -276,7 +276,7 @@ function installtenant() {
     if [ "$METHOD" == "kustomize" ]
     then
         # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
-        k apply -f $CONFIG_FILES/tenant-5-0-3.yaml
+        k apply -f $CONFIG_FILES/kustomize/Tenant/tenant-5-0-3.yaml
         # k apply -k ~/operator/examples/kustomization/tenant-lite
     fi
 
