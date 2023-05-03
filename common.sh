@@ -302,6 +302,12 @@ function squashrh() {
     git rebase -i upstream/main
 }
 
+function squashrm() {
+    git remote add upstream git@github.com:miniohq/release-manager.git
+    git fetch upstream
+    git rebase -i upstream/master
+}
+
 function squashdp() {
     git remote add upstream git@github.com:minio/directpv.git
     git fetch upstream
