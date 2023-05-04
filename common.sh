@@ -392,6 +392,25 @@ BRANCH=none
 ACCOUNT=none
 function createPR() {
 
+    if [ "$1" == "help" ]
+    then
+        echo "                              "
+        echo "                              "
+        echo "                              "
+        echo "########################################"
+        echo "# Examples you can use:"
+        echo "########################################"
+        echo "                              "
+        echo "                              "
+        echo "createPR rm name-of-the-pr    "
+        echo "          |                   "
+        echo "          |___ release-manager"
+        echo "                              "
+        echo "                              "
+        echo "                              "
+        return 0
+    fi
+
     REPO=$1
     NEW_BRANCH_FOR_PR=$2 # This is different than original branch BRANCH wich normally is master or main
 
