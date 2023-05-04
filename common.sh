@@ -394,20 +394,26 @@ function createPR() {
 
     if [ "$1" == "help" ]
     then
-        echo "                              "
-        echo "                              "
-        echo "                              "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         echo "########################################"
-        echo "# Examples you can use:"
+        echo "# Examples you can use:                 "
         echo "########################################"
-        echo "                              "
-        echo "                              "
-        echo "createPR rm name-of-the-pr    "
-        echo "          |                   "
-        echo "          |___ release-manager"
-        echo "                              "
-        echo "                              "
-        echo "                              "
+        echo "                                        "
+        echo "                                        "
+        echo "createPR rm name-of-the-pr              "
+        echo "          |                             "
+        echo "          |___ release-manager          "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
+        echo "createPR enterprise name-of-the-pr      "
+        echo "          |                             "
+        echo "          |___ enterprise               "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         return 0
     fi
 
