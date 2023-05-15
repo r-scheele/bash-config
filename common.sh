@@ -508,6 +508,12 @@ function createPR() {
 # gc console
 function gc() {
     REPO=$1
+
+    if [ "$REPO" == "rm" ]
+    then
+        REPO=release-manager
+    fi
+
     git clone git@github.com:cniackz/${REPO}.git
 }
 
