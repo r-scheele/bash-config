@@ -25,7 +25,7 @@ export OPERATOR_DEV_TEST="ON"
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH=/Library/PostgreSQL/15/bin:$PATH # To have psql
-export POSTGRESQL_URL='postgres://postgres:testing123@localhost:5432/change_manager?sslmode=disable'
+export POSTGRESQL_URL='postgres://postgres:testing123@localhost:5432/change-manager?sslmode=disable'
 export CONFIG_FILES=/Users/cniackz/bash-config/config-files
 
 ######################################
