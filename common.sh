@@ -561,6 +561,13 @@ function gc() {
 
 function convert_short_name_to_proper_name() {
 
+    echo "Check that REPO argument is provided if calling convert_short_name_to_proper_name()"
+    if [ -z "$REPO" ]
+    then
+        echo "ERROR: REPO argument has to be provided when calling convert_short_name_to_proper_name()"
+        exit 1
+    fi
+
     echo "convert_short_name_to_proper_name(): We receive only one parameter and from there we determine values"
     REPO=$1
 
@@ -646,7 +653,7 @@ function update() {
     REPO=$1
     echo "REPO: ${REPO}"
     echo "convert_short_name_to_proper_name"
-    convert_short_name_to_proper_name
+    convert_short_name_to_proper_name $REPO # REPO arg is required in this function
 
     echo "Check REPO is not empty after calling convert_short_name_to_proper_name"
     if [ -z "$REPO" ]
