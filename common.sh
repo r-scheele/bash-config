@@ -638,17 +638,30 @@ function convert_short_name_to_proper_name() {
 
 function update() {
 
+    echo "###########################"
+    echo "update():"
+    echo "###########################"
+    echo " "
     # We receive only one parameter and from there we determine values
     REPO=$1
     convert_short_name_to_proper_name
 
+    echo "git checkout ${BRANCH}"
     git checkout $BRANCH
+    echo "git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git"
     git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
+    echo "git fetch upstream"
     git fetch upstream
+    echo "git rebase upstream/$BRANCH"
     git rebase upstream/$BRANCH
-    echo "push if ok"
+    echo "check if all ok, git push is next:"
+    git push
+    echo " "
+    echo " "
 
 }
+
+
 
 
 
