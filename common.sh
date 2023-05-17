@@ -642,8 +642,10 @@ function update() {
     echo "update():"
     echo "###########################"
     echo " "
-    # We receive only one parameter and from there we determine values
+    echo "We receive only one parameter and from there we determine values"
     REPO=$1
+    echo "REPO: ${REPO}"
+    echo "convert_short_name_to_proper_name"
     convert_short_name_to_proper_name
 
     echo "git checkout ${BRANCH}"
