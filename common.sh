@@ -414,6 +414,12 @@ function createPR() {
         echo "                                        "
         echo "                                        "
         echo "                                        "
+        echo "createPR dp name-of-the-pr              "
+        echo "          |                             "
+        echo "          |___ directpv                 "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         return 0
     fi
 
@@ -599,7 +605,7 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=minio
     fi
 
-    if [ "$REPO" == "directpv" ]
+    if [ "$REPO" == "directpv" ] || [ "$REPO" == "dp" ]
     then
         REPO=directpv
         BRANCH=master
