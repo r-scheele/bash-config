@@ -349,6 +349,14 @@ function clearMinIO() {
     rm -rf /Volumes/data4/.minio.sys/
 }
 
+function upgradeMinIO() {
+    echo "Removing old MinIO binary..."
+    sudo rm -rf /usr/local/bin/minio
+    echo "Download new MinIO binary..."
+    curl --progress-bar -O https://dl.min.io/server/minio/release/darwin-arm64/minio
+    chmod +x minio
+    sudo mv minio /usr/local/bin/minio
+}
 
 
 
