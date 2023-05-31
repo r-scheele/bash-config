@@ -685,7 +685,18 @@ function update() {
         echo "##################################"
         echo " "
         exit 1
-    fi    
+    fi
+
+    echo "Check BRANCH is not empty after calling convert_short_name_to_proper_name"
+    if [ -z "$BRANCH" ]
+    then
+        echo " "
+        echo "##################################"
+        echo "ERROR: BRANCH is needed and is empty"
+        echo "##################################"
+        echo " "
+        exit 1
+    fi 
 
     echo "git checkout ${BRANCH}"
     git checkout $BRANCH
