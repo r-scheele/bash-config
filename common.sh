@@ -429,6 +429,12 @@ function createPR() {
         echo "                                        "
         echo "                                        "
         echo "                                        "
+        echo "createPR docs name-of-the-pr            "
+        echo "          |                             "
+        echo "          |___ docs                     "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         return 0
     fi
 
