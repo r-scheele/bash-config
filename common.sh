@@ -600,7 +600,7 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=miniohq
     fi
 
-    if [ "$REPO" == "dcos" ]
+    if [ "$REPO" == "docs" ]
     then
         REPO=docs
         BRANCH=main
