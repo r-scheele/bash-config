@@ -609,8 +609,11 @@ function convert_short_name_to_proper_name() {
     if [ "$REPO" == "docs" ]
     then
         REPO=docs
+        echo "convert_short_name_to_proper_name(): REPO: ${REPO}"
         BRANCH=main
+        echo "convert_short_name_to_proper_name(): BRANCH: ${BRANCH}"
         ACCOUNT=minio
+        echo "convert_short_name_to_proper_name(): ACCOUNT: ${ACCOUNT}"
     fi
 
     if [ "$REPO" == "operator" ]
