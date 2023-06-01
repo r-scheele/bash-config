@@ -274,6 +274,12 @@ function installtenant() {
         NAMESPACE=tenant-ns
     fi
 
+    if [ -z "$METHOD" ]
+    then
+        echo "If not method is provided, kustomize will be used"
+        METHOD=kustomize
+    fi
+
     if [ "$METHOD" == "kustomize" ]
     then
         # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
