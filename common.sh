@@ -175,6 +175,8 @@ function upgradeoperator() {
 
 function installoperator() {
 
+	# Example: installoperator kustomize 4.5.2 minio-operator
+
     METHOD=$1
     VERSION=$2
     NAMESPACE=$3
