@@ -121,6 +121,18 @@ echo ""
 echo ""
 }
 
+function crcStart() {
+    # https://github.com/cniackz/public/wiki/crc
+    kind delete cluster
+    crc stop
+    crc delete -f
+    crc cleanup
+    crc config set cpus 8
+    crc config set memory 16384
+    crc setup
+    crc start -c 8 -m 16384
+}
+
 function upgradetenant() {
 
     METHOD=$1
@@ -175,7 +187,7 @@ function upgradeoperator() {
 
 function installoperator() {
 
-	# Example: installoperator kustomize 4.5.2 minio-operator
+    # Example: installoperator kustomize 4.5.2 minio-operator
 
     METHOD=$1
     VERSION=$2
