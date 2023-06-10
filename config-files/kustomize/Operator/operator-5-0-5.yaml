@@ -4273,10 +4273,7 @@ spec:
           name: http
         - containerPort: 9433
           name: https
-        securityContext:
-          runAsGroup: 1000
-          runAsNonRoot: true
-          runAsUser: 1000
+        securityContext: {}
         volumeMounts:
         - mountPath: /tmp/certs
           name: tls-certificates
@@ -4315,7 +4312,7 @@ metadata:
   name: minio-operator
   namespace: minio-operator
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       name: minio-operator
@@ -4356,8 +4353,5 @@ spec:
             cpu: 200m
             ephemeral-storage: 500Mi
             memory: 256Mi
-        securityContext:
-          runAsGroup: 1000
-          runAsNonRoot: true
-          runAsUser: 1000
+        securityContext: {}
       serviceAccountName: minio-operator
