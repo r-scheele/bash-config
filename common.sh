@@ -826,6 +826,31 @@ function dpcontext() {
 
 
 
+######################################
+#
+# Other functions
+#
+######################################
+function ghpr() {
+    gh repo set-default
+    gh pr checkout $1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
