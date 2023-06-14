@@ -838,7 +838,7 @@ function ghpr() {
 
 function getminio() {
     sudo rm -rf /usr/local/bin/minio
-    wget https://dl.min.io/server/minio/release/linux-amd64/minio
+    curl --progress-bar -O https://dl.min.io/server/minio/release/darwin-arm64/minio
     chmod +x minio
     sudo mv minio /usr/local/bin/minio
 }
