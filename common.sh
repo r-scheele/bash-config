@@ -840,7 +840,7 @@ function getminio() {
     sudo rm -rf /usr/local/bin/minio
     wget https://dl.min.io/server/minio/release/linux-amd64/minio
     chmod +x minio
-    mv minio /usr/local/bin/minio
+    sudo mv minio /usr/local/bin/minio
 }
 
 
