@@ -555,6 +555,11 @@ function gc() {
         REPO=release-manager
     fi
 
+    if [ "$REPO" == "rh" ]
+    then
+        REPO=release-hub
+    fi
+
     git clone git@github.com:cniackz/${REPO}.git
 }
 
