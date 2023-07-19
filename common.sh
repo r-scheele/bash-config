@@ -51,6 +51,12 @@ alias podman=docker
 # Common functions:
 #
 ######################################
+
+function deleteCluster() {
+    printMessage "kind delete cluster:"
+    kind delete cluster
+}
+
 function commit() {
     git add .
     git commit -m 'a'
@@ -80,7 +86,7 @@ function createcluster() {
         CONFIG_FILE=$KIND_FOLDER/kind-config-ingress.yaml
     fi
 
-    kind delete cluster
+    deleteCluster
     kind create cluster --config $CONFIG_FILE
 
     # To put pool-0 in these nodes:
@@ -121,16 +127,59 @@ echo ""
 echo ""
 }
 
-function crcStart() {
-    # https://github.com/cniackz/public/wiki/crc
-    kind delete cluster
+function printMessage() {
+    MESSAGE=$1
+    echo " "
+    echo "####################"
+    echo "${MESSAGE}"
+    echo "####################"
+}
+
+function crcStop() {
+    printMessage "crc stop:"
     crc stop
+}
+
+function crcDelete() {
+	printMessage "crc delete -f:"
     crc delete -f
+}
+
+function crcCleanUp() {
+    printMessage "crc cleanup:"
     crc cleanup
+}
+
+function crcConfigSetCpus() {
+    printMessage "crc config set cpus 8:"
     crc config set cpus 8
+}
+
+function crcConfigSetMemory() {
+    printMessage "crc config set memory 16384:"
     crc config set memory 16384
+}
+
+function crcSetup() {
+    printMessage "crc setup:"
     crc setup
+}
+
+function crcStart() {
+    printMessage "crc start -c 8 -m 16384:"
     crc start -c 8 -m 16384
+}
+
+function crcRun() {
+    echo "https://github.com/cniackz/public/wiki/crc"
+    deleteCluster
+    crcStop
+    crcDelete
+    crcCleanUp
+    crcConfigSetCpus
+    crcConfigSetMemory
+    crcSetup
+    crcStart
 }
 
 function upgradetenant() {
