@@ -855,7 +855,7 @@ function kindcontext() {
 }
 
 function dpcontext() {
-    kubectl config use-context
+    kubectl config use-context directpv-admin@directpv
 }
 
 
