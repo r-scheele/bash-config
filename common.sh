@@ -366,6 +366,12 @@ function installubuntu() {
     k apply -f $CONFIG_FILES/others/ubuntu.yaml -n $1
 }
 
+function squashdocs() {
+    git remote add upstream git@github.com:minio/docs.git
+    git fetch upstream
+    git rebase -i upstream/main
+}
+
 function squashrh() {
     git remote add upstream git@github.com:miniohq/release-hub.git
     git fetch upstream
