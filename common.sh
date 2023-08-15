@@ -510,6 +510,12 @@ function createPR() {
         echo "                                        "
         echo "                                        "
         echo "                                        "
+        echo "createPR minio name-of-the-pr           "
+        echo "          |                             "
+        echo "          |___ minio                    "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         return 0
     fi
 
