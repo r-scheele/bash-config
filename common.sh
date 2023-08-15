@@ -510,7 +510,7 @@ function createPR() {
         echo "                                        "
         echo "                                        "
         echo "                                        "
-        echo "createPR minio name-of-the-pr           "
+        echo "createPR minio-1 name-of-the-pr         "
         echo "          |                             "
         echo "          |___ minio                    "
         echo "                                        "
@@ -730,6 +730,13 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=minio
     fi
 
+    if [ "$REPO" == "minio-1" ]
+    then
+        REPO=minio-1
+        BRANCH=master
+        ACCOUNT=minio
+    fi
+
     if [ "$REPO" == "rm" ]
     then
         echo "convert_short_name_to_proper_name(): REPO is rm then REPO will be release-manager"
@@ -789,8 +796,21 @@ function update() {
 
     echo "git checkout ${BRANCH}"
     git checkout $BRANCH
+
+
+    if [ "$REPO" == "minio" || "$REPO" == "minio-1" ]
+
+        echo "REPO is minio, meaning is a PR for minio golden repo"
+        echo "Hence proper name is required not minio-1 but minio just."
+        REPO=minio
+
+    fi
+
+
     echo "git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git"
     git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
+
+
     echo "git fetch upstream"
     git fetch upstream
     echo "git rebase upstream/$BRANCH"
