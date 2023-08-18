@@ -799,11 +799,10 @@ function update() {
 
 
     if [ "$REPO" == "minio" || "$REPO" == "minio-1" ]
-
+    then
         echo "REPO is minio, meaning is a PR for minio golden repo"
         echo "Hence proper name is required not minio-1 but minio just."
         REPO=minio
-
     fi
 
 
