@@ -434,6 +434,15 @@ function upgradeMinIO() {
     sudo mv minio /usr/local/bin/minio
 }
 
+function upgradeMC() {
+	echo "Removing old mc binary..."
+	sudo rm -rf /usr/local/bin/mc
+	echo "Download new mc binary..."
+	curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-amd64/mc
+	chmod +x mc
+	sudo mv mc /usr/local/bin/mc
+}
+
 
 
 
