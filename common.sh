@@ -234,6 +234,17 @@ function upgradeoperator() {
 
 }
 
+function install452() {
+    createcluster
+    cd /Users/cniackz/bash-config/config-files/kustomize/Operator
+    # kustomize build github.com/minio/operator/resources/\?ref\=v4.5.2 > operator-4-5-2.yaml
+    k apply -f operator-4-5-2.yaml
+    cd /Users/cniackz/bash-config/config-files/kustomize/Tenant
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v4.5.2 > tenant-4-5-2.yaml
+    # Then modified and removed logs and prometheus.
+    k apply -f tenant-4-5-2.yaml
+}
+
 function installoperator() {
 
     # Example: installoperator kustomize 4.5.2 minio-operator
