@@ -284,7 +284,7 @@ function installoperator() {
     then
         if [ -z "$VERSION" ]
         then
-            # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.3 > operator.yaml
+            # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.7 > operator.yaml
             # Make sure to use version or tag so that you don't have to compile against latest master code.
             # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
             k apply -f $CONFIG_FILES/kustomize/Operator/operator-5-0-7.yaml
