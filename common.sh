@@ -256,6 +256,9 @@ function installoperator() {
       --selector=app.kubernetes.io/component=controller \
       --timeout=90s
 
+    # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
+    k apply -f /Users/cniackz/bash-config/config-files/nginx
+
     # Example: installoperator kustomize 4.5.2 minio-operator
 
     METHOD=$1
@@ -379,6 +382,9 @@ function installtenant() {
           $CONFIG_FILES/helm/Tenant/tenant-$VERSION
 
     fi
+
+    # Apply ingress:
+    k apply -f /Users/cniackz/bash-config/config-files/ingress/ingress.yaml
 
 }
 
