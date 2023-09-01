@@ -5,7 +5,19 @@ networking:
   apiServerPort: 6443
 nodes:
   - role: control-plane
+    kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "ingress-ready=true"
     extraPortMappings:
+    - containerPort: 9443
+      hostPort: 9443
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      protocol: TCP
     - containerPort: 30080
       hostPort: 30080
       listenAddress: "127.0.0.1"

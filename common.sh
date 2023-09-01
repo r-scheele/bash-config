@@ -247,6 +247,15 @@ function install452() {
 
 function installoperator() {
 
+    # Install NGINX
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+    # Wait for NGINX to be ready
+    kubectl wait --namespace ingress-nginx \
+      --for=condition=ready pod \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
+
     # Example: installoperator kustomize 4.5.2 minio-operator
 
     METHOD=$1
