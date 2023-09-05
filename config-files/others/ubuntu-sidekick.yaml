@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: tenant-lite
+  name: ubuntu
+  labels:
+    app: ubuntu
+spec:
+  volumes:
+    - name: socket
+      hostPath:
+        path: /run/containerd/containerd.sock
+  containers:
+  - volumeMounts:
+      - mountPath: /run/containerd/containerd.sock
+        name: socket
+        readOnly: false
+    image: ubuntu
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: IfNotPresent
+    name: ubuntu
+  - name: sidekick
+    image: "minio/sidekick:latest"
+    imagePullPolicy: Always
+    args: ["--insecure", "--health-path", "/minio/health/ready", "--address", ":9000", "https://myminio-pool-0-{0...3}.myminio-hl.tenant-lite.svc.cluster.local:9000"]
+    ports:
+      - containerPort: 9000
+  restartPolicy: Always
