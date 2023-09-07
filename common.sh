@@ -67,12 +67,72 @@ function gcommit() {
     git commit -m "${1}"
 }
 
+function createcluster() {
+    if [ "$1" == "nodeport" ]
+    then
+        createclusternp
+    elif [ "$1" == "8nodes" ]
+    then
+        createcluster8nodes
+    elif [ "$1" == "ingress" ]
+    then
+        createclusteringress
+    elif [ "$1" == "oldversion" ]
+    then
+        createclusteroldversion
+    elif [ "$1" == "myownip" ]
+    then
+        createclustermyownip
+    elif [ "$1" == "base" ]
+    then
+        createclusterbase
+    else
+        createclusterhelp
+    fi
+}
+
+function createclusterhelp() {
+    echo "###########################"
+    echo "createcluster nodeport"
+    echo "createcluster 8nodes"
+    echo "createcluster ingress"
+    echo "createcluster oldversion"
+    echo "createcluster myownip"
+    echo "createcluster base"
+    echo "###########################"
+}
+
 function createclusternp() {
     kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-nodeport.yaml
 }
 
-function createcluster() {
+function createcluster8nodes() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-8-nodes.yaml
+}
+
+function createclusteringress() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-ingress.yaml
+}
+
+function createclusteroldversion() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-1-18.yaml
+}
+
+function createclustermyownip() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-with-my-own-ip.yaml
+}
+
+function createclusterbase() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-base.yaml
+}
+
+function createclusterlegacy() {
     NODES=$1
     VERSION=$NODES
     KIND_FOLDER=~/bash-config/config-files/kind
@@ -146,7 +206,7 @@ function crcStop() {
 }
 
 function crcDelete() {
-	printMessage "crc delete -f:"
+    printMessage "crc delete -f:"
     crc delete -f
 }
 
@@ -510,12 +570,12 @@ function upgradeMinIO() {
 }
 
 function upgradeMC() {
-	echo "Removing old mc binary..."
-	sudo rm -rf /usr/local/bin/mc
-	echo "Download new mc binary..."
-	curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-amd64/mc
-	chmod +x mc
-	sudo mv mc /usr/local/bin/mc
+    echo "Removing old mc binary..."
+    sudo rm -rf /usr/local/bin/mc
+    echo "Download new mc binary..."
+    curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-amd64/mc
+    chmod +x mc
+    sudo mv mc /usr/local/bin/mc
 }
 
 
