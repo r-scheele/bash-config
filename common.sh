@@ -310,6 +310,25 @@ function install452() {
     k apply -f tenant-4-5-2.yaml
 }
 
+function installoperator() {
+    if [ "$1" == "nodeport" ]
+    then
+        installoperatornp
+    elif [ "$1" == "ingress" ]
+    then
+        installoperatoringress
+    else
+        installoperatorhelp
+    fi
+}
+
+function installoperatorhelp() {
+    echo "###########################"
+    echo "installoperator nodeport"
+    echo "installoperator ingress"
+    echo "###########################"
+}
+
 ### installoperatornp is for nodeport
 function installoperatornp() {
     k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-7.yaml
@@ -348,7 +367,7 @@ function installoperatornp() {
 }
 
 ### installoperator by default is using nginx
-function installoperator() {
+function installoperatoringress() {
 
     # Install NGINX
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
