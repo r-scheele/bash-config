@@ -67,6 +67,11 @@ function gcommit() {
     git commit -m "${1}"
 }
 
+function createclusternp() {
+    kind delete cluster
+    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-nodeport.yaml
+}
+
 function createcluster() {
     NODES=$1
     VERSION=$NODES

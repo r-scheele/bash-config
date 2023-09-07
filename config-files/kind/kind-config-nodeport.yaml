@@ -4,12 +4,12 @@ networking:
   apiServerAddress: "127.0.0.1"
   apiServerPort: 6443
 nodes:
- - role: control-plane
-   extraPortMappings:
-   - containerPort: 30080
-     hostPort: 30080
-     listenAddress: "127.0.0.1"
-     protocol: TCP
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30080
+    hostPort: 30080
+    listenAddress: "127.0.0.1"
+    protocol: TCP
 - role: worker
   extraPortMappings:
   - containerPort: 30081
