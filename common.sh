@@ -392,6 +392,12 @@ function installoperator() {
     echo ""
 }
 
+# To install tenant for node port
+function installtenantnp() {
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/tenant-5-0-7.yaml
+}
+
+# To install tenant for nginx
 function installtenant() {
 
     METHOD=$1
