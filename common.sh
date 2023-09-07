@@ -250,6 +250,44 @@ function install452() {
     k apply -f tenant-4-5-2.yaml
 }
 
+### installoperatornp is for nodeport
+function installoperatornp() {
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-7.yaml
+    k get service console -n $NAMESPACE -o yaml > ~/service.yaml
+    yq e -i '.spec.type="NodePort"' ~/service.yaml
+    yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
+    k apply -f ~/service.yaml
+    k get deployment minio-operator -n $NAMESPACE -o yaml > ~/operator.yaml
+    yq -i -e '.spec.replicas |= 1' ~/operator.yaml
+    k apply -f ~/operator.yaml
+    k apply -f $CONFIG_FILES/others/console-secret.yaml -n $NAMESPACE
+    SA_TOKEN=$(k -n $NAMESPACE  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
+    echo ""
+    echo ""
+    echo ""
+    echo "########################################"
+    echo "#"
+    echo "# START: Operator Token"
+    echo "#"
+    echo "########################################"
+    echo ""
+    echo ""
+    echo ""
+    echo $SA_TOKEN
+    echo ""
+    echo ""
+    echo ""
+    echo "########################################"
+    echo "#"
+    echo "# END: Operator Token"
+    echo "#"
+    echo "########################################"
+    echo ""
+    echo ""
+    echo ""
+}
+
+### installoperator by default is using nginx
 function installoperator() {
 
     # Install NGINX
