@@ -366,8 +366,135 @@ function installoperatornp() {
     echo ""
 }
 
-### installoperator by default is using nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# This function install Operator using
+# NGINX Ingress for its exposure.
+#
+######################################
 function installoperatoringress() {
+
+    # Install NGINX
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+    # Wait for NGINX to be ready
+    kubectl wait --namespace ingress-nginx \
+      --for=condition=ready pod \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
+
+    # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
+    k apply -f /Users/cniackz/bash-config/config-files/nginx
+
+    # Install Operator:
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-7.yaml
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### installoperator by default is using nginx
+function installoperatorlegacy() {
 
     # Install NGINX
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
