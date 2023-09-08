@@ -488,6 +488,64 @@ function install452() {
     k apply -f tenant-4-5-2.yaml
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# This function install an Operator
+# type based on user's input.
+#
+######################################
 function installoperator() {
     if [ "$1" == "nodeport" ]
     then
@@ -500,12 +558,130 @@ function installoperator() {
     fi
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# This function offers help on how to
+# actually install an Operator
+#
+######################################
 function installoperatorhelp() {
+    echo "                           "
+    echo "                           "
+    echo "                           "
+    echo "** SUPPORTED METHODS:      "
+    echo "                           "
+    echo "                           "
+    echo "                           "
     echo "###########################"
     echo "installoperator nodeport"
     echo "installoperator ingress"
     echo "###########################"
+    echo "                           "
+    echo "                           "
+    echo "                           "
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### installoperatornp is for nodeport
 function installoperatornp() {
