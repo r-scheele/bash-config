@@ -67,6 +67,64 @@ function gcommit() {
     git commit -m "${1}"
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# This function call a function to
+# create a k8s cluster in kind
+#
+######################################
 function createcluster() {
     if [ "$1" == "nodeport" ]
     then
@@ -91,7 +149,72 @@ function createcluster() {
     fi
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################
+#
+# This function provides help on what
+# function to call for creating a
+# given k8s cluster:
+#
+######################################
 function createclusterhelp() {
+    echo "                           "
+    echo "                           "
+    echo "                           "
+    echo "**SUPPORTED CLUSTERS ARE:  "
+    echo "                           "    
+    echo "                           "
+    echo "                           "
     echo "###########################"
     echo "createcluster nodeport"
     echo "createcluster 8nodes"
@@ -100,7 +223,62 @@ function createclusterhelp() {
     echo "createcluster myownip"
     echo "createcluster base"
     echo "###########################"
+    echo "                           "
+    echo "                           "
+    echo "                           "
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function createclusternp() {
     kind delete cluster
