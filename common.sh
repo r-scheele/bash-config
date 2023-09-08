@@ -993,7 +993,7 @@ function installtenant() {
     fi
 
     # Apply ingress:
-    k apply -f /Users/cniackz/bash-config/config-files/ingress/ingress.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/ingress/tenant-ingress.yaml
 
 }
 
