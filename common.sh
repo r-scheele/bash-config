@@ -1278,7 +1278,7 @@ function installtenant() {
     elif [ "$1" == "nodeport" ]
     then
         installtenantnp
-    elfi [ "$1" == "helm" ]
+    elif [ "$1" == "helm" ]
     then
         installtenanthelm
     else
