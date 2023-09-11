@@ -126,13 +126,20 @@ function gcommit() {
 #
 ######################################
 function createcluster() {
+    
+    # To delete cluster if any:
     deleteCluster
+    
+    ISTHEREACLUSTER=NO
+
     if [ "$1" == "nodeport" ]
     then
         createclusternp
+        ISTHEREACLUSTER=YES
     elif [ "$1" == "8nodes" ]
     then
         createcluster8nodes
+        ISTHEREACLUSTER=YES
         # To put pool-0 in these nodes:
         kubectl label nodes kind-worker5 pool=one
         kubectl label nodes kind-worker6 pool=one
@@ -141,23 +148,34 @@ function createcluster() {
     elif [ "$1" == "ingress" ]
     then
         createclusteringress
+        ISTHEREACLUSTER=YES
     elif [ "$1" == "oldversion" ]
     then
         createclusteroldversion
+        ISTHEREACLUSTER=YES
     elif [ "$1" == "myownip" ]
     then
         createclustermyownip
+        ISTHEREACLUSTER=YES
     elif [ "$1" == "base" ]
     then
         createclusterbase
+        ISTHEREACLUSTER=YES
     else
         createclusterhelp
+        ISTHEREACLUSTER=NO
     fi
-    # To put pool-0 in these nodes:
-    kubectl label nodes kind-worker  pool=zero
-    kubectl label nodes kind-worker2 pool=zero
-    kubectl label nodes kind-worker3 pool=zero
-    kubectl label nodes kind-worker4 pool=zero
+    
+    # Create Labels for nodes only if we have a cluster:
+    if [ "$ISTHEREACLUSTER" == "YES" ]
+    then
+        # To put pool-0 in these nodes:
+        kubectl label nodes kind-worker  pool=zero
+        kubectl label nodes kind-worker2 pool=zero
+        kubectl label nodes kind-worker3 pool=zero
+        kubectl label nodes kind-worker4 pool=zero
+    fi
+  
 }
 
 
