@@ -796,8 +796,18 @@ function installoperatoringress() {
 
     ############################################################################
     #
-    # We can't expose Operator via Ingress Controller yet
-    # Therefore I am still exposing via NodePort
+    # To expose the Operator via Ingress with NGINX
+    # Note, we removed the NGINX Annotations as they are not needed!:
+    #   annotations:
+    #     nginx.ingress.kubernetes.io/rewrite-target: /$2 <-- This
+    #
+    ############################################################################
+    k apply -f /Users/cniackz/bash-config/config-files/ingress/operator-ingress.yaml
+
+    ############################################################################
+    #
+    # I Think we can expose it to nodeport as well, might be useful to have them
+    # both enabled at the same time!.
     #
     ############################################################################
     k get service console -n minio-operator -o yaml > ~/service.yaml
