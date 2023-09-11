@@ -126,12 +126,18 @@ function gcommit() {
 #
 ######################################
 function createcluster() {
+    deleteCluster
     if [ "$1" == "nodeport" ]
     then
         createclusternp
     elif [ "$1" == "8nodes" ]
     then
         createcluster8nodes
+        # To put pool-0 in these nodes:
+        kubectl label nodes kind-worker5 pool=one
+        kubectl label nodes kind-worker6 pool=one
+        kubectl label nodes kind-worker7 pool=one
+        kubectl label nodes kind-worker8 pool=one
     elif [ "$1" == "ingress" ]
     then
         createclusteringress
@@ -147,6 +153,11 @@ function createcluster() {
     else
         createclusterhelp
     fi
+    # To put pool-0 in these nodes:
+    kubectl label nodes kind-worker  pool=zero
+    kubectl label nodes kind-worker2 pool=zero
+    kubectl label nodes kind-worker3 pool=zero
+    kubectl label nodes kind-worker4 pool=zero
 }
 
 
@@ -279,75 +290,130 @@ function createclusterhelp() {
 
 
 
-
+# Functions to create a cluster based on different config file for kind.
+# All of them are being called in the same spot and hence some extra functionality can be
+# found at that spot: createcluster()
+# Like: deleteCluster, etc.
 function createclusternp() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-nodeport.yaml
 }
 
 function createcluster8nodes() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-8-nodes.yaml
 }
 
 function createclusteringress() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-ingress.yaml
 }
 
 function createclusteroldversion() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-1-18.yaml
 }
 
 function createclustermyownip() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-with-my-own-ip.yaml
 }
 
 function createclusterbase() {
-    kind delete cluster
     kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-base.yaml
 }
 
-function createclusterlegacy() {
-    NODES=$1
-    VERSION=$NODES
-    KIND_FOLDER=~/bash-config/config-files/kind
-    CONFIG_FILE=$KIND_FOLDER/kind-config.yaml # Default 4 nodes
-    if [ "$NODES" == "8" ]
-    then
-        # It selected, it could be up to 8 nodes for testing
-        CONFIG_FILE=$KIND_FOLDER/kind-config-8-nodes.yaml
-    fi
-    if [ "$VERSION" == "118" ]
-    then
-        CONFIG_FILE=$KIND_FOLDER/kind-config-1-18.yaml
-    fi
-    if [ "$1" == "ingress" ]
-    then
-        CONFIG_FILE=$KIND_FOLDER/kind-config-ingress.yaml
-    fi
 
-    deleteCluster
-    kind create cluster --config $CONFIG_FILE
 
-    # To put pool-0 in these nodes:
-    kubectl label nodes kind-worker  pool=zero
-    kubectl label nodes kind-worker2 pool=zero
-    kubectl label nodes kind-worker3 pool=zero
-    kubectl label nodes kind-worker4 pool=zero
 
-    if [ "$NODES" == "8" ]
-    then
-        # To put pool one in these nodes:
-        kubectl label nodes kind-worker5 pool=one
-        kubectl label nodes kind-worker6 pool=one
-        kubectl label nodes kind-worker7 pool=one
-        kubectl label nodes kind-worker8 pool=one
-    fi
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function JWTOperator() {
 kubectl apply -f - <<EOF
@@ -369,6 +435,54 @@ echo ""
 echo ""
 echo ""
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function printMessage() {
     MESSAGE=$1
@@ -445,47 +559,128 @@ function upgradetenant() {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To upgrade Operator via Helm:
 function upgradeoperator() {
 
-    METHOD=$1
-    echo "METHOD: ${METHOD}"
-    VERSION=$2
-    echo "VERSION: ${VERSION}"
-    NAMESPACE=$3
+    # Before:
+    helm list -n tenant-ns
 
-    if [ -z "$VERSION" ]
-    then
-        echo "ERROR: Version is needed"
-        return 0
-    fi
+    # Upgrade:
+    helm upgrade \
+         --namespace tenant-ns \
+         minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
 
-    if [ -z "$NAMESPACE" ]
-    then
-        echo "ERROR: Namespace is needed"
-        return 0
-    fi
-
-    if [ "$METHOD" == "helm" ]
-    then
-        echo "Upgrading via Helm..."
-        helm list -n $NAMESPACE
-        helm upgrade \
-             --namespace $NAMESPACE \
-             minio-operator $CONFIG_FILES/helm/Operator/operator-$VERSION
-        helm list -n $NAMESPACE
-    fi
+    # After:
+    helm list -n tenant-ns
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To install 4.5.2 version of Operator and Tenant
 function install452() {
-    createcluster
-    cd /Users/cniackz/bash-config/config-files/kustomize/Operator
-    # kustomize build github.com/minio/operator/resources/\?ref\=v4.5.2 > operator-4-5-2.yaml
-    k apply -f operator-4-5-2.yaml
+    createclusterbase
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-4-5-2.yaml
     cd /Users/cniackz/bash-config/config-files/kustomize/Tenant
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v4.5.2 > tenant-4-5-2.yaml
     # Then modified and removed logs and prometheus.
-    k apply -f tenant-4-5-2.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-4-5-2.yaml
 }
 
 
@@ -553,6 +748,12 @@ function installoperator() {
     elif [ "$1" == "ingress" ]
     then
         installoperatoringress
+    elif [ "$1" == "fromgithub" ]
+    then
+        installOperatorFromGitHub
+    elif [ "$1" == "withhelm" ]
+    then
+        installoperatorhelm
     else
         installoperatorhelp
     fi
@@ -623,8 +824,10 @@ function installoperatorhelp() {
     echo "                           "
     echo "                           "
     echo "###########################"
-    echo "installoperator nodeport"
-    echo "installoperator ingress"
+    echo "installoperator nodeport   "
+    echo "installoperator ingress    "
+    echo "installoperator fromgithub "
+    echo "installoperator withhelm   "
     echo "###########################"
     echo "                           "
     echo "                           "
@@ -685,39 +888,8 @@ function installoperatorhelp() {
 
 ### installoperatornp is for nodeport
 function installoperatornp() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-7.yaml
-    k get service console -n minio-operator -o yaml > ~/service.yaml
-    yq e -i '.spec.type="NodePort"' ~/service.yaml
-    yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
-    k apply -f ~/service.yaml
-    k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
-    yq -i -e '.spec.replicas |= 1' ~/operator.yaml
-    k apply -f ~/operator.yaml
-    k apply -f $CONFIG_FILES/others/console-secret.yaml -n minio-operator
-    SA_TOKEN=$(k -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
-    echo ""
-    echo ""
-    echo ""
-    echo "########################################"
-    echo "#"
-    echo "# START: Operator Token"
-    echo "#"
-    echo "########################################"
-    echo ""
-    echo ""
-    echo ""
-    echo $SA_TOKEN
-    echo ""
-    echo ""
-    echo ""
-    echo "########################################"
-    echo "#"
-    echo "# END: Operator Token"
-    echo "#"
-    echo "########################################"
-    echo ""
-    echo ""
-    echo ""
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
+    exposeOperatorViaNodePort
 }
 
 
@@ -791,8 +963,13 @@ function installoperatoringress() {
     # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
     k apply -f /Users/cniackz/bash-config/config-files/nginx
 
-    # Install Operator:
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/operator-5-0-7.yaml
+    ############################################################################
+    #
+    # I Think we can expose it to nodeport as well, might be useful to have them
+    # both enabled at the same time!.
+    #
+    ############################################################################
+    installoperatornp
 
     ############################################################################
     #
@@ -804,12 +981,221 @@ function installoperatoringress() {
     ############################################################################
     k apply -f /Users/cniackz/bash-config/config-files/ingress/operator-ingress.yaml
 
-    ############################################################################
-    #
-    # I Think we can expose it to nodeport as well, might be useful to have them
-    # both enabled at the same time!.
-    #
-    ############################################################################
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# This function install the operator from GitHub using Tag, it is mainly intended
+# as documentation, so that we can use it when needed for demos with customers.
+function installOperatorFromGitHub() {
+    # Make sure to use version or tag so that you don't have to compile against latest master code.
+    k apply -k github.com/minio/operator/resources/\?ref\=v5.0.8
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# This function creates the Operator YAML
+# It requires fast network to work and the kustomize command.
+function createOperatorYAML() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
+}
+
+function createTenantYAML() {
+    # From Master:
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
+    # From Tag:
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-8.yaml
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function installoperatorhelm() {
+    helm install \
+         --namespace minio-operator \
+         --create-namespace minio-operator \
+         /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To expose operator via NodePort
+function exposeOperatorViaNodePort() {
     k get service console -n minio-operator -o yaml > ~/service.yaml
     yq e -i '.spec.type="NodePort"' ~/service.yaml
     yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
@@ -817,7 +1203,7 @@ function installoperatoringress() {
     k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
     yq -i -e '.spec.replicas |= 1' ~/operator.yaml
     k apply -f ~/operator.yaml
-    k apply -f $CONFIG_FILES/others/console-secret.yaml -n minio-operator
+    k apply -f /Users/cniackz/bash-config/config-files/others/console-secret.yaml -n minio-operator
     SA_TOKEN=$(k -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
     echo ""
     echo ""
@@ -842,7 +1228,172 @@ function installoperatoringress() {
     echo ""
     echo ""
     echo ""
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To allow user to pick from a method when installing the tenant:
+function installtenant() {
+    if [ "$1" == "nginx" ]
+    then
+        installtenantnginx
+    elif [ "$1" == "nodeport" ]
+    then
+        installtenantnp
+    elfi [ "$1" == "helm" ]
+    then
+        installtenanthelm
+    else
+        installtenanthelp
+    fi
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To provide support on what methods can be used when installing the tenant.
+function installtenanthelp() {
+    echo "                           "
+    echo "                           "
+    echo "                           "
+    echo "** SUPPORTED METHODS:      "
+    echo "                           "
+    echo "                           "
+    echo "                           "
+    echo "###########################"
+    echo "installtenant nginx        "
+    echo "installtenant nodeport     "
+    echo "installtenant helm         "
+    echo "###########################"
+    echo "                           "
+    echo "                           "
+    echo "                           "
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function installtenantkustomize() {
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-8.yaml
 }
 
 
@@ -896,165 +1447,228 @@ function installoperatoringress() {
 
 
 
-### installoperator by default is using nginx
-function installoperatorlegacy() {
-
-    # Install NGINX
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-
-    # Wait for NGINX to be ready
-    kubectl wait --namespace ingress-nginx \
-      --for=condition=ready pod \
-      --selector=app.kubernetes.io/component=controller \
-      --timeout=90s
-
-    # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
-    k apply -f /Users/cniackz/bash-config/config-files/nginx
-
-    # Example: installoperator kustomize 4.5.2 minio-operator
-
-    METHOD=$1
-    VERSION=$2
-    NAMESPACE=$3
-
-    if [ "$1" == "help" ]
-    then
-        echo "installoperator(): Examples:"
-        echo "installoperator(): installoperator METHOD VERSION NAMESPACE"
-        echo "installoperator(): METHOD:  Kustomize or Helm"
-        echo "installoperator(): VERSION: 4.5.8, 5.0.3, etc."
-        echo "installoperator(): NAMESPACE: minio-operator, tenant-lite, etc."
-        echo "installoperator():"
-        echo "installoperator(): Below install Operator version 5.0.4 in tenant-lite namespace:"
-        echo "installoperator(): installoperator helm 5.0.4 tenant-lite"
-        return
-    fi
-
-    DEFAULT_METHOD=kustomize
-    echo "installoperator(): If no method is provided, then $DEFAULT_METHOD is default method."
-    if [ -z "$METHOD" ]
-    then
-        METHOD=$DEFAULT_METHOD
-    fi
-
-    DEFAULT_NAMESPACE=minio-operator
-    echo "installoperator(): If no namespace is provided, then $DEFAULT_NAMESPACE is default namespace."
-    if [ -z "$NAMESPACE" ]
-    then
-        NAMESPACE=$DEFAULT_NAMESPACE
-    fi
-
-    if [ "$METHOD" == "kustomize" ]
-    then
-        if [ -z "$VERSION" ]
-        then
-            # kustomize build github.com/minio/operator/resources/\?ref\=v5.0.8 > operator.yaml
-            # Make sure to use version or tag so that you don't have to compile against latest master code.
-            # k apply -k github.com/minio/operator/resources/\?ref\=v5.0.3
-            k apply -f $CONFIG_FILES/kustomize/Operator/operator-5-0-7.yaml
-        else
-            k apply -k github.com/minio/operator/resources/\?ref\=v"$VERSION"
-        fi
-    fi
-
-    if [ "$METHOD" == "helm" ]
-    then
-
-        helm install \
-             --namespace $NAMESPACE \
-             --create-namespace $NAMESPACE \
-             $CONFIG_FILES/helm/Operator/operator-"$VERSION"
-
-    fi
-
-    k get service console -n $NAMESPACE -o yaml > ~/service.yaml
-    yq e -i '.spec.type="NodePort"' ~/service.yaml
-    yq e -i '.spec.ports[0].nodePort = 30080' ~/service.yaml
-    k apply -f ~/service.yaml
-    k get deployment minio-operator -n $NAMESPACE -o yaml > ~/operator.yaml
-    yq -i -e '.spec.replicas |= 1' ~/operator.yaml
-    k apply -f ~/operator.yaml
-    k apply -f $CONFIG_FILES/others/console-secret.yaml -n $NAMESPACE
-    SA_TOKEN=$(k -n $NAMESPACE  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
-    echo ""
-    echo ""
-    echo ""
-    echo "########################################"
-    echo "#"
-    echo "# START: Operator Token"
-    echo "#"
-    echo "########################################"
-    echo ""
-    echo ""
-    echo ""
-    echo $SA_TOKEN
-    echo ""
-    echo ""
-    echo ""
-    echo "########################################"
-    echo "#"
-    echo "# END: Operator Token"
-    echo "#"
-    echo "########################################"
-    echo ""
-    echo ""
-    echo ""
-}
 
 # To install tenant for node port
 function installtenantnp() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/tenant-5-0-7.yaml
+    installtenantkustomize
+    # TODO: Expose tenant via NodePort, remember there are two services one for mc the other for react.
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To install tenant via Helm:
+function installtenanthelm() {
+    helm install \
+      --namespace tenant-ns \
+      --create-namespace tenant-ns \
+      /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.8
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # To install tenant for nginx
-function installtenant() {
+function installtenantnginx() {
 
-    # To put pool-0 in these nodes:
-    kubectl label nodes kind-worker  pool=zero
-    kubectl label nodes kind-worker2 pool=zero
-    kubectl label nodes kind-worker3 pool=zero
-    kubectl label nodes kind-worker4 pool=zero
-
-    METHOD=$1
-    VERSION=$2
-    NAMESPACE=$3
-
-    if [ -z "$NAMESPACE" ]
-    then
-        NAMESPACE=tenant-ns
-    fi
-
-    if [ -z "$METHOD" ]
-    then
-        echo "If not method is provided, kustomize will be used"
-        METHOD=kustomize
-    fi
-
-    if [ "$METHOD" == "kustomize" ]
-    then
-        # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
-        k apply -f $CONFIG_FILES/kustomize/Tenant/tenant-5-0-3.yaml
-        # k apply -k ~/operator/examples/kustomization/tenant-lite
-    fi
-
-    if [ "$METHOD" == "helm" ]
-    then
-
-        helm install \
-          --namespace $NAMESPACE \
-          --create-namespace $NAMESPACE \
-          $CONFIG_FILES/helm/Tenant/tenant-$VERSION
-
-    fi
+    # Install Tenant via Kustomize as our preferred method:
+    installtenantkustomize
 
     # Apply ingress:
     k apply -f /Users/cniackz/bash-config/config-files/ingress/tenant-ingress.yaml
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To install ubuntu pod on any given namespace
 function installubuntu() {
-    k apply -f $CONFIG_FILES/others/ubuntu.yaml -n $1
+    k apply -f /Users/cniackz/bash-config/config-files/others/ubuntu.yaml -n $1
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function squashdocs() {
     git remote add upstream git@github.com:minio/docs.git
