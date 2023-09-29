@@ -6,15 +6,15 @@
 # https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 #
 ######################################
-(
-  set -x; cd "$(mktemp -d)" &&
-  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-  KREW="krew-${OS}_${ARCH}" &&
-  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-  tar zxvf "${KREW}.tar.gz" &&
-  ./"${KREW}" install krew
-)
+# (
+#   set -x; cd "$(mktemp -d)" &&
+#   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+#   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+#   KREW="krew-${OS}_${ARCH}" &&
+#   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+#   tar zxvf "${KREW}.tar.gz" &&
+#   ./"${KREW}" install krew
+# )
 
 ######################################
 #
@@ -26,7 +26,7 @@ export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH=/Library/PostgreSQL/15/bin:$PATH # To have psql
 export POSTGRESQL_URL='postgres://postgres:testing123@localhost:5432/change-manager?sslmode=disable'
-export CONFIG_FILES=/Users/cniackz/bash-config/config-files
+export CONFIG_FILES=/Users/Abdulrahman/bash-config/config-files
 
 ######################################
 #
@@ -300,9 +300,9 @@ function createclusterhelp() {
 
 
 
+HOME_DIR=Abdulrahman
 
-
-
+GH_USERNAME=r-scheele
 
 
 
@@ -313,27 +313,27 @@ function createclusterhelp() {
 # found at that spot: createcluster()
 # Like: deleteCluster, etc.
 function createclusternp() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-nodeport.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-nodeport.yaml
 }
 
 function createcluster8nodes() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-8-nodes.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-8-nodes.yaml
 }
 
 function createclusteringress() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-ingress.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-ingress.yaml
 }
 
 function createclusteroldversion() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-1-18.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-1-18.yaml
 }
 
 function createclustermyownip() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-with-my-own-ip.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-with-my-own-ip.yaml
 }
 
 function createclusterbase() {
-    kind create cluster --config /Users/cniackz/bash-config/config-files/kind/kind-config-base.yaml
+    kind create cluster --config /Users/$HOME_DIR/bash-config/config-files/kind/kind-config-base.yaml
 }
 
 
@@ -734,7 +734,7 @@ function upgradeoperator() {
     # Upgrade:
     helm upgrade \
          --namespace tenant-ns \
-         minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
+         minio-operator /Users/$HOME_DIR/bash-config/config-files/helm/Operator/helm-operator-5.0.8
 
     # After:
     helm list -n tenant-ns
@@ -791,11 +791,11 @@ function upgradeoperator() {
 # To install 4.5.2 version of Operator and Tenant
 function install452() {
     createclusterbase
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-4-5-2.yaml
-    cd /Users/cniackz/bash-config/config-files/kustomize/Tenant
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/kustomize/Operator/kustomize-operator-4-5-2.yaml
+    cd /Users/$HOME_DIR/bash-config/config-files/kustomize/Tenant
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v4.5.2 > tenant-4-5-2.yaml
     # Then modified and removed logs and prometheus.
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-4-5-2.yaml
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/kustomize/Tenant/kustomize-tenant-4-5-2.yaml
 }
 
 
@@ -1003,7 +1003,7 @@ function installoperatorhelp() {
 
 ### installoperatornp is for nodeport
 function installoperatornp() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
     exposeOperatorViaNodePort
 }
 
@@ -1076,7 +1076,7 @@ function installoperatoringress() {
       --timeout=90s
 
     # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
-    k apply -f /Users/cniackz/bash-config/config-files/nginx
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/nginx
 
     ############################################################################
     #
@@ -1094,7 +1094,7 @@ function installoperatoringress() {
     #     nginx.ingress.kubernetes.io/rewrite-target: /$2 <-- This
     #
     ############################################################################
-    k apply -f /Users/cniackz/bash-config/config-files/ingress/operator-ingress.yaml
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/ingress/operator-ingress.yaml
 
 }
 
@@ -1191,7 +1191,7 @@ function installOperatorFromGitHub() {
 # This function creates the Operator YAML
 # It requires fast network to work and the kustomize command.
 function createOperatorYAML() {
-    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-9.yaml
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.9 > /Users/$HOME_DIR/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-9.yaml
 }
 
 function createTenantYAML() {
@@ -1199,7 +1199,7 @@ function createTenantYAML() {
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
     # From Tag:
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
-    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-9.yaml
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.9 > /Users/$HOME_DIR/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-9.yaml
 }
 
 
@@ -1255,7 +1255,7 @@ function installoperatorhelm() {
     helm install \
          --namespace minio-operator \
          --create-namespace minio-operator \
-         /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
+         /Users/$HOME_DIR/bash-config/config-files/helm/Operator/helm-operator-5.0.8
 }
 
 
@@ -1318,7 +1318,7 @@ function exposeOperatorViaNodePort() {
     k get deployment minio-operator -n minio-operator -o yaml > ~/operator.yaml
     yq -i -e '.spec.replicas |= 1' ~/operator.yaml
     k apply -f ~/operator.yaml
-    k apply -f /Users/cniackz/bash-config/config-files/others/console-secret.yaml -n minio-operator
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/others/console-secret.yaml -n minio-operator
     SA_TOKEN=$(k -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)
     echo ""
     echo ""
@@ -1508,7 +1508,7 @@ function installtenanthelp() {
 
 
 function installtenantkustomize() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-8.yaml
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-8.yaml
 }
 
 
@@ -1613,7 +1613,7 @@ function installtenanthelm() {
     helm install \
       --namespace tenant-ns \
       --create-namespace tenant-ns \
-      /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.8
+      /Users/$HOME_DIR/bash-config/config-files/helm/Tenant/helm-tenant-5.0.8
 }
 
 
@@ -1678,7 +1678,7 @@ function installtenantnginx() {
     installtenantkustomize
 
     # Apply ingress:
-    k apply -f /Users/cniackz/bash-config/config-files/ingress/tenant-ingress.yaml
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/ingress/tenant-ingress.yaml
 
 }
 
@@ -1732,7 +1732,7 @@ function installtenantnginx() {
 
 # To install ubuntu pod on any given namespace
 function installubuntu() {
-    k apply -f /Users/cniackz/bash-config/config-files/others/ubuntu.yaml -n $1
+    k apply -f /Users/$HOME_DIR/bash-config/config-files/others/ubuntu.yaml -n $1
 }
 
 
@@ -1995,8 +1995,8 @@ function createPR() {
     echo "git checkout -b $NEW_BRANCH_FOR_PR"
     git checkout -b $NEW_BRANCH_FOR_PR
 
-    echo "To Start working Open sublime here:"
-    echo "subl ."
+    echo "To Start working Open VS CODE here:"
+    echo "code ."
 }
 
 
@@ -2049,7 +2049,7 @@ function gc() {
         REPO=release-hub
     fi
 
-    git clone git@github.com:cniackz/${REPO}.git
+    git clone git@github.com:$GH_USERNAME/${REPO}.git
 }
 
 

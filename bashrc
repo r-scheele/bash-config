@@ -21,7 +21,7 @@ alias minioserver="CI=on MINIO_ROOT_USER=minio MINIO_ROOT_PASSWORD=minio123 mini
 # Other particular things for ubuntu:
 export PATH=$PATH:/usr/local/go/bin
 export set GOROOT=/usr/local/go
-export set GOPATH=/home/ccelis/go
+export set GOPATH=/home/Abdulrahman/go
 
 function gcem(){
 	rm -rf ~/enterprise
