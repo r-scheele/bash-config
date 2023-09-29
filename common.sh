@@ -21,12 +21,15 @@
 # Environment Variables
 #
 ######################################
+HOME_DIR=Abdulrahman
+GH_USERNAME=r-scheele
 export OPERATOR_DEV_TEST="ON"
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH=/Library/PostgreSQL/15/bin:$PATH # To have psql
 export POSTGRESQL_URL='postgres://postgres:testing123@localhost:5432/change-manager?sslmode=disable'
-export CONFIG_FILES=/Users/Abdulrahman/bash-config/config-files
+export CONFIG_FILES=/Users/$HOME_DIR/bash-config/config-files
+
 
 ######################################
 #
@@ -300,9 +303,6 @@ function createclusterhelp() {
 
 
 
-HOME_DIR=Abdulrahman
-
-GH_USERNAME=r-scheele
 
 
 
